@@ -25,8 +25,6 @@ export async function DELETE(request) {
 export async function PUT(request) {
   const id = request.nextUrl.searchParams.get("id");
   const { weight, date, userId } = await request.json();
-    console.log("Received ID:", id);
-    console.log("Received Data:", { weight, date, userId });
   await connectMongoDB();
   await Weight.findByIdAndUpdate(id, { weight, date, userId });
   return NextResponse.json({ message: "Weight updated" }, { status: 200 });

@@ -16,28 +16,34 @@ const services = [
     icon: <Scale></Scale>,
     button: "Try me!",
     href: "/weight",
+    bg: "bg-teal-700",
   },
+
+  {
+    title: "Web analyst",
+    icon: "./logo.png",
+    button: "Try me!",
+    href: "/cup",
+    bg: "bg-teal-500",
+  },
+
   {
     title: "Water filler",
     icon: <Cup></Cup>,
     button: "Try me!",
-    href: "/cup",
-  },
-  {
-    title: "Web analyst",
-    icon: "./logo.png",
-    button: "Weigth Stats",
-    href: "/cup",
+    href: "/water",
+    bg: "bg-sky-500",
   },
   {
     title: "Backend Developer",
     icon: "./logo.png",
-    button: "Weigth Stats",
+    button: "Try me!",
     href: "/cup",
+    bg: "bg-sky-600",
   },
 ];
 
-const ServiceCard = ({ index, title, icon, button,href }) => (
+const ServiceCard = ({ index, title, icon, button,href,bg }) => (
   <Tilt className="xs:w-[250px] w-[300px] mx-2">
     <motion.div
       variants={fadeIn("right", "spring", index * 0.5, 0.75)}
@@ -49,7 +55,7 @@ const ServiceCard = ({ index, title, icon, button,href }) => (
           scale: 1,
           speed: 450,
         }}
-        className="bg-teal-700  rounded-[20px] py-5 px-12 min-h-[280px] flex justify-evenly items-center flex-col mb-5"
+        className={`${bg}  rounded-[20px] py-5 px-12 min-h-[280px] flex justify-evenly items-center flex-col mb-5`}
       >
         <div  className="w-12 h-12 text-white object-contain">
           {icon}
@@ -60,7 +66,7 @@ const ServiceCard = ({ index, title, icon, button,href }) => (
           {title}
         </h1>
 
-        <Link href={href} className="bg-gray-200 p-2 rounded-lg">
+        <Link href={href} className="bg-gray-200 p-2 rounded-lg gradient border border-black ">
           {button}
         </Link>
       </div>

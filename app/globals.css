@@ -75,4 +75,6 @@
   }
 }
 
-
+.gradient {
+background: radial-gradient(circle, rgba(78,231,152,1) 0%, rgba(27,189,215,1) 100%); 
+}

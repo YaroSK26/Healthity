@@ -1,5 +1,4 @@
 motion div 
 layout page
 
-raz za den posielanie vahy opravit
 dynamicky chart spravit , teda ten filter poslat do databazy 
