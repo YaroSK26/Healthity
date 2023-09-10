@@ -104,7 +104,7 @@ const Weight = () => {
         <input
           onChange={(e) => setWeight(e.target.value)}
           value={weight}
-          className="border border-teal-500 m-1 pl-1 p-1 rounded-lg w-56"
+          className="border border-teal-700 m-1 pl-1 p-1 rounded-lg w-56"
           type="number"
           step="0.1"
           placeholder="Your Weight today (kg/lbs)"

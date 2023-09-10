@@ -8,6 +8,7 @@ import { Tilt } from "react-tilt";
 import Link from "next/link";
 import Scale from "../icons/Scale"
 import Cup from "@/icons/Cup";
+import { Radar } from "lucide-react";
 
 
 const services = [
@@ -20,10 +21,10 @@ const services = [
   },
 
   {
-    title: "Web analyst",
-    icon: "./logo.png",
+    title: "BMI",
+    icon: <Radar className="w-12 h-12"/>,
     button: "Try me!",
-    href: "/cup",
+    href: "/bmi",
     bg: "bg-teal-500",
   },
 
