@@ -1,4 +1,1 @@
-motion div 
-layout page
-
 dynamicky chart spravit , teda ten filter poslat do databazy 

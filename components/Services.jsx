@@ -3,18 +3,17 @@
 
 
 import { motion } from "framer-motion";
-import { fadeIn } from "../utils/motion";
+import { fadeIn, textVariant } from "../utils/motion";
 import { Tilt } from "react-tilt";
 import Link from "next/link";
-import Scale from "../icons/Scale"
-import Cup from "@/icons/Cup";
-import { Radar } from "lucide-react";
+import { CupSoda, Radar, ScaleIcon } from "lucide-react";
+
 
 
 const services = [
   {
     title: "Weight progress",
-    icon: <Scale></Scale>,
+    icon: <ScaleIcon className="w-12 h-12"></ScaleIcon>,
     button: "Try me!",
     href: "/weight",
     bg: "bg-teal-700",
@@ -22,7 +21,7 @@ const services = [
 
   {
     title: "BMI",
-    icon: <Radar className="w-12 h-12"/>,
+    icon: <Radar className="w-12 h-12" />,
     button: "Try me!",
     href: "/bmi",
     bg: "bg-teal-500",
@@ -30,7 +29,7 @@ const services = [
 
   {
     title: "Water filler",
-    icon: <Cup></Cup>,
+    icon: <CupSoda className="w-12 h-12"></CupSoda>,
     button: "Try me!",
     href: "/water",
     bg: "bg-sky-500",
@@ -77,14 +76,18 @@ const ServiceCard = ({ index, title, icon, button,href,bg }) => (
 
 const Services = () => {
   return (
-    <>
-      <div className="mt-20 flex flex-wrap gap-10 justify-center">
-        {services.map((service, index) => (
-          <ServiceCard key={service.title} index={index} {...service} />
-        ))}
-      </div>
-    </>
+    <motion.div
+      variants={textVariant()}
+      initial="hidden"
+      animate="show"
+      className="mt-20 flex flex-wrap gap-10 justify-center"
+    >
+      {services.map((service, index) => (
+        <ServiceCard key={service.title} index={index} {...service} />
+      ))}
+    </motion.div>
   );
 };
+
 
 export default Services
