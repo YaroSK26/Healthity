@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { fadeIn, textVariant } from "../utils/motion";
 import { Tilt } from "react-tilt";
 import Link from "next/link";
-import { CupSoda, Radar, ScaleIcon } from "lucide-react";
+import { BookMarked, CupSoda, Radar, ScaleIcon } from "lucide-react";
 
 
 
@@ -35,10 +35,10 @@ const services = [
     bg: "bg-sky-500",
   },
   {
-    title: "Backend Developer",
-    icon: "./logo.png",
+    title: "Journal",
+    icon: <BookMarked className="w-12 h-12" ></BookMarked>,
     button: "Try me!",
-    href: "/cup",
+    href: "/journal",
     bg: "bg-sky-600",
   },
 ];

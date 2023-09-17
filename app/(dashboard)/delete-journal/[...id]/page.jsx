@@ -12,7 +12,7 @@ const DeletePage = ({swal}) => {
     const [value, setValue] = useState("");
     const [id, setId] = useState("");
     const [loading,setLoading] = useState(true);
-     const clerk = useClerk();
+    const clerk = useClerk();
 
  
 
@@ -25,24 +25,23 @@ const DeletePage = ({swal}) => {
     };
 
     useEffect(() => {
-     
-      const DeleteAxios = axios.get(`/api/weight`); 
+      const DeleteAxios = axios.get(`/api/journal`); 
    
 
       DeleteAxios.then((response) => {
         const data = response.data; // Získajte údaje z odpovede
-        const dataWeights = data.Weights;
+        const dataJournals = data.Journals;
             setLoading(true);
 
         // Filtrujte podľa _id
-        const matchingDeleteId = dataWeights.filter(
+        const matchingDeleteId = dataJournals.filter(
           (entry) =>
-            `http://localhost:3000/delete/${entry._id}` ===
+            `http://localhost:3000/delete-journal/${entry._id}` ===
             window.location.href
         );
         if (matchingDeleteId.length > 0) {
           setId(matchingDeleteId[0]._id);
-          setValue(matchingDeleteId[0].weight); // Nastavte hodnotu na prvý nájdený záznam (predpokladáme, že ide o unikátne ID)
+          setValue(matchingDeleteId[0].date);
           setLoading(false);
         
         }
@@ -54,7 +53,7 @@ const DeletePage = ({swal}) => {
 const handleDelete = () => {
   swal
     .fire({
-      title: "Are you sure you want to delete this weight?",
+      title: "Are you sure you want to delete this journal?",
       type: "warning",
       showCancelButton: true,
       confirmButtonColor: "#DD6B55",
@@ -65,36 +64,32 @@ const handleDelete = () => {
       if (result.isConfirmed) {
         // If the user confirms the deletion
         axios
-          .delete(`/api/weight?id=${id}`) // Assuming the endpoint includes the ID
+          .delete(`/api/journal?id=${id}`) // Assuming the endpoint includes the ID
           .then((response) => {
             // Handle success or display a message to the user
             toast.success("Deleted!");
 
-            // Check if there are any other weight entries for the current day
-            axios.get("/api/weight").then((response) => {
+            // Check if there are any other journal entries for the current day
+            axios.get("/api/journal").then((response) => {
               const data = response.data;
-              const dataWeights = data.Weights;
+              const dataJournals = data.Journals;
 
               if (!clerk.user) {
                 return null; // Případně můžete zobrazit nějakou chybu, pokud uživatel není přihlášen
               }
               const userId = clerk.user.id;
 
-              const hasEntriesForCurrentDay = dataWeights.some(
+              const hasEntriesForCurrentDay = dataJournals.some(
                 (entry) =>
                   entry.date === getCurrentDate() && entry.userId === userId
               );
 
-             if (!hasEntriesForCurrentDay) {
-                // If there are no more entries for the current day, set canSubmit to true
-                if (userId === response.data.userId ) {
-                  return
-                }
-                
+              if (hasEntriesForCurrentDay) {
+                 console.log(dataJournals)
               }
 
-              // Redirect to the weight page
-              window.location.href = "http://localhost:3000/weight";
+              // Redirect to the journal page
+              window.location.href = "http://localhost:3000/journal";
             });
           });
       }
@@ -108,7 +103,7 @@ const handleDelete = () => {
     <div className=" flex-col flex   items-center justify-center mt-10 gap-2">
       <h1 className="text-center text-3xl font-bold mb-4">
  
-          Delete Weight
+          Delete Journal
       </h1>
       <div>
         <input

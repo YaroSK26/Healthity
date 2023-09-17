@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useEffect, useState } from "react";
-import SheetMenu from "@/components/SheetMenu";
+import SheetMenu from "./SheetMenu";
 import Link from "next/link";
 import { UserButton, useAuth } from "@clerk/nextjs";
 
@@ -51,7 +51,7 @@ const NavBar = () => {
                 <Link href={"/water"}>Water</Link>
               </li>
               <li>
-                <Link href={"/water"}>Nieco</Link>
+                <Link href={"/journal"}>Journal</Link>
               </li>
               <UserButton afterSignOutUrl="/"></UserButton>
             </ul>

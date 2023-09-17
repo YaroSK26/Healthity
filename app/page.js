@@ -1,6 +1,6 @@
 
-import Services from "@/components/Services";
-import TestAPI from "@/components/TestAPI";
+import Services from "../components/Services";
+import TestAPI from "../components/TestAPI";
 
 
 export default function Home() {

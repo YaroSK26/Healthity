@@ -40,7 +40,7 @@ useEffect(() => {
             })
             .catch((error) => {
               // Handle errors or display an error message to the user
-              swal.fire("Error", "Failed to delete the weight.", "error");
+              swal.fire("Error", "Failed to edit the weight.", "error");
             });
   };
 
