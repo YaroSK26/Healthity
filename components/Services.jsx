@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { fadeIn, textVariant } from "../utils/motion";
 import { Tilt } from "react-tilt";
 import Link from "next/link";
-import { BookMarked, CupSoda, Radar, ScaleIcon } from "lucide-react";
+import { BookMarked, CupSoda, HeartPulse, Radar, ScaleIcon } from "lucide-react";
 
 
 
@@ -36,10 +36,17 @@ const services = [
   },
   {
     title: "Journal",
-    icon: <BookMarked className="w-12 h-12" ></BookMarked>,
+    icon: <BookMarked className="w-12 h-12"></BookMarked>,
     button: "Try me!",
     href: "/journal",
     bg: "bg-sky-600",
+  },
+  {
+    title: "Blood Pressure",
+    icon: <HeartPulse className="w-12 h-12" />,
+    button: "Try me!",
+    href: "/bloodPressure",
+    bg: "bg-teal-500",
   },
 ];
 
@@ -47,7 +54,7 @@ const ServiceCard = ({ index, title, icon, button,href,bg }) => (
   <Tilt className="xs:w-[250px] w-[300px] mx-2">
     <motion.div
       variants={fadeIn("right", "spring", index * 0.5, 0.75)}
-      className="w-full  rounded-[20px] shadow-card "
+      className="w-full  rounded-[20px] shadow-card drop-shadow-2xl "
     >
       <div
         options={{
@@ -66,7 +73,7 @@ const ServiceCard = ({ index, title, icon, button,href,bg }) => (
           {title}
         </h1>
 
-        <Link href={href} className="bg-gray-200 p-2 rounded-lg gradient border border-black ">
+        <Link href={href} className="bg-gray-200 p-2 rounded-lg drop-shadow-lg ">
           {button}
         </Link>
       </div>

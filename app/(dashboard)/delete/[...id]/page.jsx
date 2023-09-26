@@ -108,7 +108,7 @@ const handleDelete = () => {
     <div className=" flex-col flex   items-center justify-center mt-10 gap-2">
       <h1 className="text-center text-3xl font-bold mb-4">
  
-          Delete Weight
+          Delete weight
       </h1>
       <div>
         <input

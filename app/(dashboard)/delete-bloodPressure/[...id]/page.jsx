@@ -10,9 +10,9 @@ const DeletePage = ({swal}) => {
 
 
     const [value, setValue] = useState("");
+    const [value2, setValue2] = useState("");
     const [id, setId] = useState("");
     const [loading,setLoading] = useState(true);
-    const [canSubmit, setCanSubmit] = useState(true);
      const clerk = useClerk();
 
  
@@ -26,28 +26,25 @@ const DeletePage = ({swal}) => {
     };
 
     useEffect(() => {
-
-      const canSubmitFromLocalStorage =
-        localStorage.getItem("canSubmit") !== "false";
-      setCanSubmit(canSubmitFromLocalStorage);
      
-      const DeleteAxios = axios.get(`/api/water`); 
+      const DeleteAxios = axios.get(`/api/bloodPressure`); 
    
 
       DeleteAxios.then((response) => {
         const data = response.data; // Získajte údaje z odpovede
-        const dataWaters = data.Waters;
+        const dataBloodPressures = data.BloodPressures;
             setLoading(true);
 
         // Filtrujte podľa _id
-        const matchingDeleteId = dataWaters.filter(
+        const matchingDeleteId = dataBloodPressures.filter(
           (entry) =>
-            `http://localhost:3000/delete-water/${entry._id}` ===
+            `http://localhost:3000/delete-bloodPressure/${entry._id}` ===
             window.location.href
         );
         if (matchingDeleteId.length > 0) {
           setId(matchingDeleteId[0]._id);
-          setValue(matchingDeleteId[0].water); // Nastavte hodnotu na prvý nájdený záznam (predpokladáme, že ide o unikátne ID)
+          setValue(matchingDeleteId[0].bloodPressureUp); // Nastavte hodnotu na prvý nájdený záznam (predpokladáme, že ide o unikátne ID)
+          setValue2(matchingDeleteId[0].bloodPressureDown); // Nastavte hodnotu na prvý nájdený záznam (predpokladáme, že ide o unikátne ID)
           setLoading(false);
         
         }
@@ -59,7 +56,7 @@ const DeletePage = ({swal}) => {
 const handleDelete = () => {
   swal
     .fire({
-      title: "Are you sure you want to delete this cup?",
+      title: "Are you sure you want to delete this bloodPressure?",
       type: "warning",
       showCancelButton: true,
       confirmButtonColor: "#DD6B55",
@@ -70,36 +67,36 @@ const handleDelete = () => {
       if (result.isConfirmed) {
         // If the user confirms the deletion
         axios
-          .delete(`/api/water?id=${id}`) // Assuming the endpoint includes the ID
+          .delete(`/api/bloodPressure?id=${id}`) // Assuming the endpoint includes the ID
           .then((response) => {
             // Handle success or display a message to the user
             toast.success("Deleted!");
 
-            // Check if there are any other weight entries for the current day
-            axios.get("/api/water").then((response) => {
+            // Check if there are any other bloodPressure entries for the current day
+            axios.get("/api/bloodPressure").then((response) => {
               const data = response.data;
-              const dataWaters = data.Waters;
+              const dataBloodPressures = data.BloodPressures;
 
               if (!clerk.user) {
                 return null; // Případně můžete zobrazit nějakou chybu, pokud uživatel není přihlášen
               }
               const userId = clerk.user.id;
 
-              const hasEntriesForCurrentDay = dataWaters.some(
+              const hasEntriesForCurrentDay = dataBloodPressures.some(
                 (entry) =>
                   entry.date === getCurrentDate() && entry.userId === userId
               );
 
-              if (!hasEntriesForCurrentDay) {
+             if (!hasEntriesForCurrentDay) {
                 // If there are no more entries for the current day, set canSubmit to true
                 if (userId === response.data.userId ) {
-                  setCanSubmit(true);
+                  return
                 }
-                localStorage.setItem("canSubmit", "true");
+                
               }
 
-              // Redirect to the weight page
-              window.location.href = "http://localhost:3000/water";
+              // Redirect to the bloodPressure page
+              window.location.href = "http://localhost:3000/bloodPressure";
             });
           });
       }
@@ -112,14 +109,20 @@ const handleDelete = () => {
   return (
     <div className=" flex-col flex   items-center justify-center mt-10 gap-2">
       <h1 className="text-center text-3xl font-bold mb-4">
- 
-          Delete cup
+        Delete blood pressure
       </h1>
       <div>
         <input
           className="border border-teal-500 m-1 pl-1 p-1 bg-gray-200 rounded-lg w-56"
           type="text"
           value={value}
+          disabled
+          placeholder="Loading..."
+        />
+        <input
+          className="border border-teal-500 m-1 pl-1 p-1 bg-gray-200 rounded-lg w-56"
+          type="text"
+          value={value2}
           disabled
           placeholder="Loading..."
         />

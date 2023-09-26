@@ -46,7 +46,7 @@ useEffect(() => {
 
   return (
     <div className=" flex-col flex   items-center justify-center mt-10 gap-2">
-      <h1 className="text-center text-3xl font-bold mb-4">Edit Weight</h1>
+      <h1 className="text-center text-3xl font-bold mb-4">Edit weight</h1>
       <div>
         <input
           className="border border-teal-500 m-1 pl-1 p-1  rounded-lg w-56"
