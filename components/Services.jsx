@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { fadeIn, textVariant } from "../utils/motion";
 import { Tilt } from "react-tilt";
 import Link from "next/link";
-import { BookMarked, CupSoda, HeartPulse, Radar, ScaleIcon } from "lucide-react";
+import { BookMarked, CupSoda, HeartPulse, Radar, ScaleIcon, UtensilsCrossed } from "lucide-react";
 
 
 
@@ -47,6 +47,13 @@ const services = [
     button: "Try me!",
     href: "/bloodPressure",
     bg: "bg-teal-500",
+  },
+  {
+    title: "Food Tracker",
+    icon: <UtensilsCrossed className="w-12 h-12" />,
+    button: "Try me!",
+    href: "/food-lobby",
+    bg: "bg-sky-500",
   },
 ];
 

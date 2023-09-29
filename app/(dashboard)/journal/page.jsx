@@ -150,7 +150,7 @@ useEffect(() => {
             placeholder="What have you come to? what did you learn after you wrote? what did you do wrong?"
           />
 
-          <button className="bg-black p-2 rounded-lg mt-1 text-white">
+          <button className="bg-sky-600 p-2 rounded-lg mt-1 text-white">
             Submit
           </button>
         </div>

@@ -56,6 +56,9 @@ const NavBar = () => {
               <li>
                 <Link href={"/bloodPressure"}>Pressure</Link>
               </li>
+              <li>
+                <Link href={"/food-lobby"}>Tracker</Link>
+              </li>
               <UserButton afterSignOutUrl="/"></UserButton>
             </ul>
           </nav>

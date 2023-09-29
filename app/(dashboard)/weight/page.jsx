@@ -105,13 +105,10 @@ useEffect(() => {
           min={1}
           max={150}
         />
-        <button
-          className="bg-black p-1 rounded-lg text-white"
-        >
+        <button className="bg-teal-700 p-1 rounded-lg text-white">
           Submit
         </button>
       </form>
-
 
       {loading === false &&
         realProduct.map((e) => (
@@ -129,10 +126,7 @@ useEffect(() => {
         ))}
 
       {loading === true && <div>Loading...</div>}
-      {realProduct.length === 0 && (
-        <div>No weight found.</div>
-      )}
-
+      {realProduct.length === 0 && <div>No weight found.</div>}
     </div>
   );
 };

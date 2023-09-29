@@ -122,7 +122,7 @@ const Water = () => {
           <option>750</option>
           <option>1000</option>
         </select>
-        <button className="bg-black p-1 rounded-lg text-white">Submit</button>
+        <button className="bg-sky-500 p-1 rounded-lg text-white">Submit</button>
       </form>
 
       {loading === false &&

@@ -64,6 +64,16 @@ const SheetMenu = () => {
                   Journal
                 </Link>
               </li>
+              <li>
+                <Link href={"/bloodPressure"} onClick={closeSheet}>
+                 Pressure
+                </Link>
+              </li>
+              <li>
+                <Link href={"/food-lobby"} onClick={closeSheet}>
+                  Tracker
+                </Link>
+              </li>
               <UserButton afterSignOutUrl="/"></UserButton>
             </ul>
           </nav>

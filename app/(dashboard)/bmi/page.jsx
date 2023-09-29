@@ -81,8 +81,10 @@ useEffect(() => {
           min={1}
           max={150}
           required
-          value={ lastWeight ||weight }
-          onChange={(e) => setWeight(e.target.value) ||  setLastWeight(e.target.value)}
+          value={lastWeight || weight}
+          onChange={(e) =>
+            setWeight(e.target.value) || setLastWeight(e.target.value)
+          }
         />
         <input
           className="border border-teal-500 m-1 pl-1 p-1 rounded-lg w-56"
@@ -96,7 +98,9 @@ useEffect(() => {
           onChange={(e) => setHeight(e.target.value)}
         />
         <div>
-          <button className="bg-black p-1 rounded-lg text-white w-56">Submit</button>
+          <button className="bg-teal-500 p-1 rounded-lg text-white w-56">
+            Submit
+          </button>
         </div>
       </form>
       {bmi !== null && bmiPerson !== null && (
