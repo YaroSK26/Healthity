@@ -112,17 +112,17 @@ const FoodLobby = () => {
 
   const food = [
     {
-      title: "Ranajky",
+      title: "Breakfast",
       kcal: 0,
       food: "",
     },
     {
-      title: "Desiata",
+      title: "Snack",
       kcal: 20,
       food: "",
     },
     {
-      title: "Obed",
+      title: "Lunch",
       kcal: 0,
       food: "",
     },
@@ -132,12 +132,12 @@ const FoodLobby = () => {
       food: "",
     },
     {
-      title: "Večera",
+      title: "Dinner",
       kcal: 200,
       food: "",
     },
     {
-      title: "Druhá večera",
+      title: "Second dinner",
       kcal: 2000,
       food: "",
     },
