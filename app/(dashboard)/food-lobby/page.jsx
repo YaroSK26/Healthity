@@ -1,20 +1,18 @@
 "use client";
 import { ArrowLeft, ArrowRight, Plus, Settings } from "lucide-react";
 import Link from "next/link";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useClerk } from "@clerk/clerk-react";
 import axios from "axios";
-
 
 const FoodLobby = () => {
   const [active, setActive] = useState("overview");
   const [foodSettings, setFoodSettings] = useState("");
   const [loading, setLoading] = useState(false);
 
-    
   const [date, setDate] = useState(new Date());
-   const clerk = useClerk();
-   const userId = clerk.user ? clerk.user.id : null;
+  const clerk = useClerk();
+  const userId = clerk.user ? clerk.user.id : null;
 
   const getCurrentDate = (date) => {
     const year = date.getFullYear();
@@ -35,41 +33,108 @@ const FoodLobby = () => {
     setDate(new Date(event.target.value));
   };
 
- useEffect(() => {
-   // Check if the user is logged in
-   if (userId) {
-     // Make API call only if the user is logged in
-     setLoading(true); // Set loading to true before making the API call
-     axios
-       .get(`/api/foodSettings?userId=${userId}`)
-       .then((response) => {
-         // Check if the response contains data and the user ID matches
-         if (
-           response.data.FoodSetting &&
-           response.data.FoodSetting[0]?.userId === userId
-         ) {
-           setFoodSettings(response.data.FoodSetting[0]);
-           console.log(response.data.FoodSetting[0]);
-         } else {
-           console.error("Invalid data or user ID mismatch");
-         }
-       })
-       .catch((error) => {
-         console.error("Error loading food settings:", error);
-       })
-       .finally(() => {
-         setLoading(false); // Set loading to false after API call completion
-       });
-   }
- }, [userId]);
+  const [breakfast, setBreakfast] = useState([]);
+  const [snack, setSnack] = useState([]);
+  const [lunch, setLunch] = useState([]);
+  const [olovrant, setOlovrant] = useState([]);
+  const [dinner, setDinner] = useState([]);
+  const [secondDinner, setSecondDinner] = useState([]);
+
+  useEffect(() => {
+    // Check if the user is logged in
+    if (userId) {
+      // Make API call only if the user is logged in
+      setLoading(true); // Set loading to true before making the API call
+       const currentDate = getCurrentDate(date);
+      axios
+        .get(`/api/foodSettings?userId=${userId}`)
+        .then((response) => {
+          // Check if the response contains data and the user ID matches
+          if (
+            response.data.FoodSetting &&
+            response.data.FoodSetting[0]?.userId === userId
+          ) {
+            setFoodSettings(response.data.FoodSetting[0]);
+          } else {
+            console.error("Invalid data or user ID mismatch");
+          }
+        })
+        .catch((error) => {
+          console.error("Error loading food settings:", error);
+        })
+        .finally(() => {
+          setLoading(false); // Set loading to false after API call completion
+        });
+
+      axios
+        .get(`/api/food?userId={userId}`)
+        .then((response) => {
+          const matchingEntriesBreakfast = response.data.Foods.filter(
+            (entry) =>
+              entry.time === "Breakfast" &&
+              entry.userId === userId &&
+              entry.date === currentDate
+          );
+
+          const matchingEntriesSnack = response.data.Foods.filter(
+            (entry) =>
+              entry.time === "Snack" &&
+              entry.userId === userId &&
+              entry.date === currentDate
+          );
+          const matchingEntriesLunch = response.data.Foods.filter(
+            (entry) =>
+              entry.time === "Lunch" &&
+              entry.userId === userId &&
+              entry.date === currentDate
+          );
+          const matchingEntriesOlovrant = response.data.Foods.filter(
+            (entry) =>
+              entry.time === "Olovrant" &&
+              entry.userId === userId &&
+              entry.date === currentDate
+          );
+          const matchingEntriesDinner = response.data.Foods.filter(
+            (entry) =>
+              entry.time === "Dinner" &&
+              entry.userId === userId &&
+              entry.date === currentDate
+          );
+          const matchingEntriesSecondDinner = response.data.Foods.filter(
+            (entry) =>
+              entry.time === "Second dinner" &&
+              entry.userId === userId &&
+              entry.date === currentDate
+          );
+
+          setBreakfast(matchingEntriesBreakfast);
+          setSnack(matchingEntriesSnack);
+          setLunch(matchingEntriesLunch);
+          setOlovrant(matchingEntriesOlovrant);
+          setDinner(matchingEntriesDinner);
+          setSecondDinner(matchingEntriesSecondDinner);
+        })
+        .catch((error) => {
+          console.error("Error fetching food data:", error);
+        });
+    }
+  }, [userId,date]);
 
   const sum = [
     {
       title: "Sum",
-      kcal: 100, 
+      kcal: 100,
       fromKcal: foodSettings.sum || 2000,
       percent: function () {
-        return ((this.kcal / this.fromKcal) * 100).toFixed(0);
+        return (
+          ((totalKcal +
+            totalKcal2 +
+            totalKcal3 +
+            totalKcal4 +
+            totalKcal5 +
+            totalKcal6 - 56) / this.fromKcal) *
+          100
+        ).toFixed(0);
       },
     },
   ];
@@ -94,7 +159,7 @@ const FoodLobby = () => {
     {
       title: "Fat",
       g: 11,
-      fromG: foodSettings.fat ||50,
+      fromG: foodSettings.fat || 50,
       percent: function () {
         return ((this.g / this.fromG) * 100).toFixed(0);
       },
@@ -109,71 +174,124 @@ const FoodLobby = () => {
     },
   ];
 
+ 
 
-  const food = [
-    {
-      title: "Breakfast",
-      kcal: 0,
-      food: "",
-    },
-    {
-      title: "Snack",
-      kcal: 20,
-      food: "",
-    },
-    {
-      title: "Lunch",
-      kcal: 0,
-      food: "",
-    },
-    {
-      title: "Olovrant",
-      kcal: 0,
-      food: "",
-    },
-    {
-      title: "Dinner",
-      kcal: 200,
-      food: "",
-    },
-    {
-      title: "Second dinner",
-      kcal: 2000,
-      food: "",
-    },
+  let totalKcal = 0;
+  let totalKcal2 = 0;
+  let totalKcal3 = 0;
+  let totalKcal4 = 0;
+  let totalKcal5 = 0;
+  let totalKcal6 = 0;
 
-  ]
+  let totalP = 0;
+  let totalP2 = 0;
+  let totalP3 = 0;
+  let totalP4 = 0;
+  let totalP5 = 0;
+  let totalP6 = 0;
 
-  
+  let totalC = 0;
+  let totalC2 = 0;
+  let totalC3 = 0;
+  let totalC4 = 0;
+  let totalC5 = 0;
+  let totalC6 = 0;
+
+  let totalF = 0;
+  let totalF2 = 0;
+  let totalF3 = 0;
+  let totalF4 = 0;
+  let totalF5 = 0;
+  let totalF6 = 0;
+
+  let totalR = 0;
+  let totalR2 = 0;
+  let totalR3 = 0;
+  let totalR4 = 0;
+  let totalR5 = 0;
+  let totalR6 = 0;
+
+  breakfast.forEach((item) => {
+    totalKcal += item.kcal;
+    totalP += item.protein;
+    totalC += item.carbs;
+    totalF += item.fat;
+    totalR += item.roughage;
+  });
+
+  snack.forEach((item) => {
+    totalKcal2 += item.kcal;
+    totalP2 += item.protein;
+    totalC2 += item.carbs;
+    totalF2 += item.fat;
+    totalR2 += item.roughage;
+    
+  });
+
+  lunch.forEach((item) => {
+    totalKcal3 += item.kcal;
+    totalP3 += item.protein;
+    totalC3 += item.carbs;
+    totalF3 += item.fat;
+    totalR3 += item.roughage;
+  });
+
+  olovrant.forEach((item) => {
+    totalKcal4 += item.kcal;
+    totalP4 += item.protein;
+    totalC4 += item.carbs;
+    totalF4 += item.fat;
+    totalR4 += item.roughage;
+  });
+
+  dinner.forEach((item) => {
+    totalKcal5 += item.kcal;
+    totalP5 += item.protein;
+    totalC5 += item.carbs;
+    totalF5 += item.fat;
+    totalR5 += item.roughage;
+  });
+
+  secondDinner.forEach((item) => {
+    totalKcal6 += item.kcal;
+    totalP6 += item.protein;
+    totalC6 += item.carbs;
+    totalF6 += item.fat;
+    totalR6 += item.roughage;
+  });
 
 
   return (
-    <div className="flex flex-col justify-center items-center mt-5 gap-5 ">
+    <div className="flex flex-col justify-center items-center mt-5 gap-5  ">
       <h1 className="text-center text-3xl font-bold mb-4">Food tracker</h1>
 
-      <div className="flex flex-col gap-5 border-2 border-black w-[310px] justify-start items-center h-[500px] rounded-2xl mb-5">
+      <div className="flex flex-col gap-5 border-2 p-1 border-black w-[320px] justify-start items-center max-h-[475px]  min-h-[350px] overflow-auto rounded-2xl mb-5">
         <div className="flex relative gap-5 mt-2">
           <div className="absolute right-48">
             <Link href={"/food-settings"}>
               <Settings />
             </Link>
           </div>
-          <h2
-            onClick={() => setActive("overview")}
-            className={`text-lg font-bold ${
-              active === "overview" ? "underline" : ""
-            } cursor-pointer`}
-          >
-            Overview
-          </h2>
-          <h2
-            onClick={() => setActive("food")}
-            className={`text-lg font-bold ${
-              active === "food" ? "underline" : ""
-            } cursor-pointer`}
-          >
-            Food
-          </h2>
+          {loading === false && (
+            <div className="flex gap-5">
+              <h2
+                onClick={() => setActive("overview")}
+                className={`text-lg font-bold ${
+                  active === "overview" ? "underline" : ""
+                } cursor-pointer`}
+              >
+                Overview
+              </h2>
+              <h2
+                onClick={() => setActive("food")}
+                className={`text-lg font-bold ${
+                  active === "food" ? "underline" : ""
+                } cursor-pointer`}
+              >
+                Food
+              </h2>
+            </div>
+          )}
         </div>
         <div>
           <div className="flex gap-10">
@@ -194,19 +312,27 @@ const FoodLobby = () => {
               <div className="grid grid-cols-2 mt-4 gap-5 w-68 relative mx-auto">
                 <div className="border-2 rounded-2xl  border-black pl-1 ">
                   <p className="text-sm p-1">Intake</p>
-                  <p className="font-bold text-lg p-1">{1110} kcal</p>
+                  <p className="font-bold text-lg p-1">
+                    {totalKcal +
+                      totalKcal2 +
+                      totalKcal3 +
+                      totalKcal4 +
+                      totalKcal5 +
+                      totalKcal6}{" "}
+                    kcal
+                  </p>
                   <Link
-                    href="food"
+                    href="/food"
                     className="absolute left-[100px] bottom-5 text-white bg-sky-500 rounded-full"
                   >
                     <Plus />
                   </Link>
                 </div>
                 <div className="border-2 rounded-2xl  border-black pl-1">
-                  <p className="text-sm p-1">Activites</p>
+                  <p className="text-sm p-1">Activities</p>
                   <p className="font-bold text-lg p-1">-{56} kcal</p>
                   <Link
-                    href="food"
+                    href="/activities"
                     className="absolute left-[252px] bottom-5 text-white bg-sky-500 rounded-full"
                   >
                     <Plus />
@@ -227,7 +353,14 @@ const FoodLobby = () => {
                     <div>
                       <p>Sum</p>
                       <p className="font-bold text-lg">
-                        {item.kcal} kcal&nbsp;
+                        {totalKcal +
+                          totalKcal2 +
+                          totalKcal3 +
+                          totalKcal4 +
+                          totalKcal5 +
+                          totalKcal6 -
+                          56}
+                        kcal&nbsp;
                         <span className="font-normal text-sm">
                           from {item.fromKcal} kcal
                         </span>
@@ -237,47 +370,266 @@ const FoodLobby = () => {
                 ))}
               </div>
               <div className="grid grid-cols-2 gap-1">
-                {totalG.map((item) => (
-                  <div className="flex gap-2 mt-8 " key={item.title}>
-                    <div className="rounded-full  bg-sky-500 w-[55px] h-[55px] flex justify-center items-center mt-2">
-                      <div className="rounded-full  bg-white w-10 h-10 text-gray-900 p-1 justify-center flex items-center">
-                        {item.percent()}%
-                      </div>
-                    </div>
-                    <div>
-                      <p>{item.title}</p>
-                      <p className="font-bold flex flex-col ">
-                        {item.g} g
-                        <span className="font-normal text-sm">
-                          from {item.fromG} g
-                        </span>
-                      </p>
+                <div className="flex gap-2 mt-6 mb-2">
+                  <div className="rounded-full  bg-sky-500 w-[55px] h-[55px] flex justify-center items-center mt-2">
+                    <div className="rounded-full  bg-white w-10 h-10 text-gray-900 p-1 justify-center flex items-center">
+                      {totalG.length > 0 &&
+                        `${(
+                          ((totalP +
+                            totalP2 +
+                            totalP3 +
+                            totalP4 +
+                            totalP5 +
+                            totalP6) /
+                            totalG[0].fromG) *
+                          100
+                        ).toFixed(0)}%`}
                     </div>
                   </div>
-                ))}
+                  <div>
+                    <p>Protein</p>
+                    <p className="font-bold flex flex-col ">
+                      {totalP + totalP2 + totalP3 + totalP4 + totalP5 + totalP6}{" "}
+                      g
+                    </p>
+                    {totalG.map((item, index) => (
+                      <span key={item.title} className="font-normal text-sm">
+                        {index === 0 && `from ${item.fromG} g`}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex gap-2 mt-6 mb-2">
+                  <div className="rounded-full  bg-sky-500 w-[55px] h-[55px] flex justify-center items-center mt-2">
+                    <div className="rounded-full  bg-white w-10 h-10 text-gray-900 p-1 justify-center flex items-center">
+                      {totalG.length > 0 &&
+                        `${(
+                          ((totalC +
+                            totalC2 +
+                            totalC3 +
+                            totalC4 +
+                            totalC5 +
+                            totalC6) /
+                            totalG[1].fromG) *
+                          100
+                        ).toFixed(0)}%`}
+                    </div>
+                  </div>
+                  <div>
+                    <p>Carbs</p>
+                    <p className="font-bold flex flex-col ">
+                      {totalC + totalC2 + totalC3 + totalC4 + totalC5 + totalC6}{" "}
+                      g
+                    </p>
+                    {totalG.map((item, index) => (
+                      <span key={item.title} className="font-normal text-sm">
+                        {index === 1 && `from ${item.fromG} g`}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex gap-2 mt-6 mb-2">
+                  <div className="rounded-full  bg-sky-500 w-[55px] h-[55px] flex justify-center items-center mt-2">
+                    <div className="rounded-full  bg-white w-10 h-10 text-gray-900 p-1 justify-center flex items-center">
+                      {totalG.length > 0 &&
+                        `${(
+                          ((totalF +
+                            totalF2 +
+                            totalF3 +
+                            totalF4 +
+                            totalF5 +
+                            totalF6) /
+                            totalG[2].fromG) *
+                          100
+                        ).toFixed(0)}%`}
+                    </div>
+                  </div>
+                  <div>
+                    <p>Fat</p>
+                    <p className="font-bold flex flex-col ">
+                      {totalF + totalF2 + totalF3 + totalF4 + totalF5 + totalF6}{" "}
+                      g
+                    </p>
+                    {totalG.map((item, index) => (
+                      <span key={item.title} className="font-normal text-sm">
+                        {index === 2 && `from ${item.fromG} g`}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex gap-2 mt-6 mb-2">
+                  <div className="rounded-full  bg-sky-500 w-[55px] h-[55px] flex justify-center items-center mt-2">
+                    <div className="rounded-full  bg-white w-10 h-10 text-gray-900 p-1 justify-center flex items-center">
+                      {totalG.length > 0 &&
+                        `${(
+                          ((totalR +
+                            totalR2 +
+                            totalR3 +
+                            totalR4 +
+                            totalR5 +
+                            totalR6) /
+                            totalG[3].fromG) *
+                          100
+                        ).toFixed(0)}%`}
+                    </div>
+                  </div>
+                  <div>
+                    <p>Roughage</p>
+                    <p className="font-bold flex flex-col ">
+                      {totalR + totalR2 + totalR3 + totalR4 + totalR5 + totalR6}{" "}
+                      g
+                    </p>
+                    {totalG.map((item, index) => (
+                      <span key={item.title} className="font-normal text-sm">
+                        {index === 3 && `from ${item.fromG} g`}
+                      </span>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           )}
 
           {active === "food" && (
             <div className="mt-4 flex flex-col gap-2">
-              {food.map((item) => (
-                <div
-                  key={item.title}
-                  className=" bg-gray-200 rounded-xl p-1 text-black flex justify-between items-center"
-                >
-                  <label htmlFor="ranajky">{item.title} </label>
-                  <div className="flex gap-2  ">
-                    {item.kcal} kcal
-                    <Link
-                      href="food"
-                      className=" text-white bg-sky-500 rounded-full"
-                    >
-                      <Plus />
-                    </Link>
-                  </div>
+              <div className=" bg-gray-200 rounded-xl p-1 text-black flex justify-between items-center">
+                <label htmlFor="ranajky">Breakfast </label>
+                <div className="flex gap-2  ">
+                  <p>{totalKcal} &nbsp; kcal</p>
+                  <Link
+                    href="/food"
+                    className=" text-white bg-sky-500 rounded-full"
+                  >
+                    <Plus />
+                  </Link>
                 </div>
+              </div>
+              {breakfast.map((item) => (
+                <p key={item.title}>
+                  {item.title} &nbsp;
+                  <span className="text-gray-500">
+                    {item.quantity} * {item.option}g/ml &nbsp; {item.kcal} kcal
+                  </span>
+                </p>
               ))}
+              <div className=" bg-gray-200 rounded-xl p-1 text-black flex justify-between items-center">
+                <label htmlFor="ranajky">Snack </label>
+                <div className="flex gap-2  ">
+                  <p>{totalKcal2} &nbsp; kcal</p>
+                  <Link
+                    href="/food"
+                    className=" text-white bg-sky-500 rounded-full"
+                  >
+                    <Plus />
+                  </Link>
+                </div>
+              </div>
+              {snack.map((item) => (
+                <p key={item.title}>
+                  {item.title} &nbsp;
+                  <span className="text-gray-500">
+                    {item.quantity} * {item.option}g/ml &nbsp; {item.kcal} kcal
+                  </span>
+                  {item.kcal}
+                </p>
+              ))}
+              <div className=" bg-gray-200 rounded-xl p-1 text-black flex justify-between items-center">
+                <label htmlFor="ranajky">Lunch </label>
+                <div className="flex gap-2  ">
+                  <p>{totalKcal3} &nbsp; kcal</p>
+
+                  <Link
+                    href="/food"
+                    className=" text-white bg-sky-500 rounded-full"
+                  >
+                    <Plus />
+                  </Link>
+                </div>
+              </div>
+              {lunch.map((item) => (
+                <p key={item.title} className="flex justify-between">
+                  {item.title} &nbsp;
+                  <span className="text-gray-500 ">
+                    {item.quantity} * {item.option}g/ml &nbsp; {item.kcal} kcal
+                  </span>
+                </p>
+              ))}
+              <div className=" bg-gray-200 rounded-xl p-1 text-black flex justify-between items-center">
+                <label htmlFor="ranajky">Olovrant </label>
+                <div className="flex gap-2  ">
+                  <p>{totalKcal4} &nbsp; kcal</p>
+                  <Link
+                    href="/food"
+                    className=" text-white bg-sky-500 rounded-full"
+                  >
+                    <Plus />
+                  </Link>
+                </div>
+              </div>
+              {olovrant.map((item) => (
+                <p key={item.title}>
+                  {item.title} &nbsp;
+                  <span className="text-gray-500">
+                    {item.quantity} * {item.option}g/ml &nbsp; {item.kcal} kcal
+                  </span>
+                </p>
+              ))}
+              <div className=" bg-gray-200 rounded-xl p-1 text-black flex justify-between items-center">
+                <label htmlFor="ranajky">Dinner </label>
+                <div className="flex gap-2  ">
+                  <p>{totalKcal5} &nbsp; kcal</p>
+                  <Link
+                    href="/food"
+                    className=" text-white bg-sky-500 rounded-full"
+                  >
+                    <Plus />
+                  </Link>
+                </div>
+              </div>
+              {dinner.map((item) => (
+                <p key={item.title}>
+                  {item.title} &nbsp;
+                  <span className="text-gray-500">
+                    {item.quantity} * {item.option}g/ml &nbsp; {item.kcal} kcal
+                  </span>
+                </p>
+              ))}
+              <div className=" bg-gray-200 rounded-xl p-1 text-black flex justify-between items-center">
+                <label htmlFor="ranajky">Second dinner </label>
+                <div className="flex gap-2  ">
+                  <p>{totalKcal6} &nbsp; kcal</p>
+                  <Link
+                    href="/food"
+                    className=" text-white bg-sky-500 rounded-full"
+                  >
+                    <Plus />
+                  </Link>
+                </div>
+              </div>
+              {secondDinner.map((item) => (
+                <p key={item.title}>
+                  {item.title} &nbsp;
+                  <span className="text-gray-500">
+                    {item.quantity} * {item.option}g/ml &nbsp; {item.kcal} kcal
+                  </span>
+                </p>
+              ))}
+
+              <div className=" bg-gray-200 rounded-xl p-1 text-black flex justify-between items-center">
+                <label htmlFor="ranajky">Activities </label>
+                <div className="flex gap-2  ">
+                  <p>-56 kcal</p>
+                  <Link
+                    href="/activities"
+                    className=" text-white bg-sky-500 rounded-full"
+                  >
+                    <Plus />
+                  </Link>
+                </div>
+              </div>
             </div>
           )}
         </div>
