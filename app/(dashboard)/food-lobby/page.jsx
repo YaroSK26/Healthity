@@ -9,6 +9,7 @@ const FoodLobby = () => {
   const [active, setActive] = useState("overview");
   const [foodSettings, setFoodSettings] = useState("");
   const [loading, setLoading] = useState(false);
+  const [activities, setActivities] = useState([]);
 
   const [date, setDate] = useState(new Date());
   const clerk = useClerk();
@@ -41,83 +42,82 @@ const FoodLobby = () => {
   const [secondDinner, setSecondDinner] = useState([]);
 
   useEffect(() => {
-    // Check if the user is logged in
-    if (userId) {
-      // Make API call only if the user is logged in
-      setLoading(true); // Set loading to true before making the API call
-       const currentDate = getCurrentDate(date);
-      axios
-        .get(`/api/foodSettings?userId=${userId}`)
-        .then((response) => {
-          // Check if the response contains data and the user ID matches
-          if (
-            response.data.FoodSetting &&
-            response.data.FoodSetting[0]?.userId === userId
-          ) {
-            setFoodSettings(response.data.FoodSetting[0]);
-          } else {
-            console.error("Invalid data or user ID mismatch");
-          }
-        })
-        .catch((error) => {
-          console.error("Error loading food settings:", error);
-        })
-        .finally(() => {
-          setLoading(false); // Set loading to false after API call completion
-        });
+   if (userId) {
+     setLoading(true);
 
-      axios
-        .get(`/api/food?userId={userId}`)
-        .then((response) => {
-          const matchingEntriesBreakfast = response.data.Foods.filter(
-            (entry) =>
-              entry.time === "Breakfast" &&
-              entry.userId === userId &&
-              entry.date === currentDate
-          );
+     const currentDate = getCurrentDate(date);
 
-          const matchingEntriesSnack = response.data.Foods.filter(
-            (entry) =>
-              entry.time === "Snack" &&
-              entry.userId === userId &&
-              entry.date === currentDate
-          );
-          const matchingEntriesLunch = response.data.Foods.filter(
-            (entry) =>
-              entry.time === "Lunch" &&
-              entry.userId === userId &&
-              entry.date === currentDate
-          );
-          const matchingEntriesOlovrant = response.data.Foods.filter(
-            (entry) =>
-              entry.time === "Olovrant" &&
-              entry.userId === userId &&
-              entry.date === currentDate
-          );
-          const matchingEntriesDinner = response.data.Foods.filter(
-            (entry) =>
-              entry.time === "Dinner" &&
-              entry.userId === userId &&
-              entry.date === currentDate
-          );
-          const matchingEntriesSecondDinner = response.data.Foods.filter(
-            (entry) =>
-              entry.time === "Second dinner" &&
-              entry.userId === userId &&
-              entry.date === currentDate
-          );
+     // Fetch activities based on user ID and date
+   axios
+     .get(`/api/activities?userId=${userId}&date=${currentDate}`)
+     .then((response) => {
+       const activitiesData = response.data.Activity;
+       const matchingEntriesActivities = activitiesData.filter(
+         (entry) =>
+           entry.userId === userId &&
+           entry.date === currentDate
+       );
+       setActivities(matchingEntriesActivities);
+     })
+     .catch((error) => {
+       console.error("Error fetching activities:", error);
+     })
+     .finally(() => {
+       setLoading(false);
+     });
 
-          setBreakfast(matchingEntriesBreakfast);
-          setSnack(matchingEntriesSnack);
-          setLunch(matchingEntriesLunch);
-          setOlovrant(matchingEntriesOlovrant);
-          setDinner(matchingEntriesDinner);
-          setSecondDinner(matchingEntriesSecondDinner);
-        })
-        .catch((error) => {
-          console.error("Error fetching food data:", error);
-        });
-    }
+     axios
+       .get(`/api/food?userId=${userId}`)
+       .then((response) => {
+         const matchingEntriesBreakfast = response.data.Foods.filter(
+           (entry) =>
+             entry.time === "Breakfast" &&
+             entry.userId === userId &&
+             entry.date === currentDate
+         );
+
+         const matchingEntriesSnack = response.data.Foods.filter(
+           (entry) =>
+             entry.time === "Snack" &&
+             entry.userId === userId &&
+             entry.date === currentDate
+         );
+         const matchingEntriesLunch = response.data.Foods.filter(
+           (entry) =>
+             entry.time === "Lunch" &&
+             entry.userId === userId &&
+             entry.date === currentDate
+         );
+         const matchingEntriesOlovrant = response.data.Foods.filter(
+           (entry) =>
+             entry.time === "Olovrant" &&
+             entry.userId === userId &&
+             entry.date === currentDate
+         );
+         const matchingEntriesDinner = response.data.Foods.filter(
+           (entry) =>
+             entry.time === "Dinner" &&
+             entry.userId === userId &&
+             entry.date === currentDate
+         );
+         const matchingEntriesSecondDinner = response.data.Foods.filter(
+           (entry) =>
+             entry.time === "Second dinner" &&
+             entry.userId === userId &&
+             entry.date === currentDate
+         );
+
+         setBreakfast(matchingEntriesBreakfast);
+         setSnack(matchingEntriesSnack);
+         setLunch(matchingEntriesLunch);
+         setOlovrant(matchingEntriesOlovrant);
+         setDinner(matchingEntriesDinner);
+         setSecondDinner(matchingEntriesSecondDinner);
+       })
+       .catch((error) => {
+         console.error("Error fetching food data:", error);
+       });
+   }
   }, [userId,date]);
 
   const sum = [
@@ -132,7 +132,9 @@ const FoodLobby = () => {
             totalKcal3 +
             totalKcal4 +
             totalKcal5 +
-            totalKcal6 - 56) / this.fromKcal) *
+            totalKcal6 +
+            activities.reduce((acc, activity) => acc + activity.kcal, 0)) /
+            this.fromKcal) *
           100
         ).toFixed(0);
       },
@@ -259,7 +261,7 @@ const FoodLobby = () => {
     totalF6 += item.fat;
     totalR6 += item.roughage;
   });
-
+  
 
   return (
     <div className="flex flex-col justify-center items-center mt-5 gap-5  ">
@@ -318,7 +320,7 @@ const FoodLobby = () => {
                       totalKcal3 +
                       totalKcal4 +
                       totalKcal5 +
-                      totalKcal6}{" "}
+                      totalKcal6}
                     kcal
                   </p>
                   <Link
@@ -330,7 +332,13 @@ const FoodLobby = () => {
                 </div>
                 <div className="border-2 rounded-2xl  border-black pl-1">
                   <p className="text-sm p-1">Activities</p>
-                  <p className="font-bold text-lg p-1">-{56} kcal</p>
+                  <p className="font-bold text-lg p-1">
+                    {activities.reduce(
+                      (acc, activity) => acc + activity.kcal,
+                      0
+                    )}
+                    kcal
+                  </p>
                   <Link
                     href="/activities"
                     className="absolute left-[252px] bottom-5 text-white bg-sky-500 rounded-full"
@@ -358,8 +366,11 @@ const FoodLobby = () => {
                           totalKcal3 +
                           totalKcal4 +
                           totalKcal5 +
-                          totalKcal6 -
-                          56}
+                          totalKcal6 +
+                          activities.reduce(
+                            (acc, activity) => acc + activity.kcal,
+                            0
+                          )}
                         kcal&nbsp;
                         <span className="font-normal text-sm">
                           from {item.fromKcal} kcal
@@ -498,7 +509,7 @@ const FoodLobby = () => {
               <div className=" bg-gray-200 rounded-xl p-1 text-black flex justify-between items-center">
                 <label htmlFor="ranajky">Breakfast </label>
                 <div className="flex gap-2  ">
-                  <p>{totalKcal} &nbsp; kcal</p>
+                  <p>{totalKcal} kcal</p>
                   <Link
                     href="/food"
                     className=" text-white bg-sky-500 rounded-full"
@@ -518,7 +529,7 @@ const FoodLobby = () => {
               <div className=" bg-gray-200 rounded-xl p-1 text-black flex justify-between items-center">
                 <label htmlFor="ranajky">Snack </label>
                 <div className="flex gap-2  ">
-                  <p>{totalKcal2} &nbsp; kcal</p>
+                  <p>{totalKcal2} kcal</p>
                   <Link
                     href="/food"
                     className=" text-white bg-sky-500 rounded-full"
@@ -539,7 +550,7 @@ const FoodLobby = () => {
               <div className=" bg-gray-200 rounded-xl p-1 text-black flex justify-between items-center">
                 <label htmlFor="ranajky">Lunch </label>
                 <div className="flex gap-2  ">
-                  <p>{totalKcal3} &nbsp; kcal</p>
+                  <p>{totalKcal3} kcal</p>
 
                   <Link
                     href="/food"
@@ -560,7 +571,7 @@ const FoodLobby = () => {
               <div className=" bg-gray-200 rounded-xl p-1 text-black flex justify-between items-center">
                 <label htmlFor="ranajky">Olovrant </label>
                 <div className="flex gap-2  ">
-                  <p>{totalKcal4} &nbsp; kcal</p>
+                  <p>{totalKcal4} kcal</p>
                   <Link
                     href="/food"
                     className=" text-white bg-sky-500 rounded-full"
@@ -580,7 +591,7 @@ const FoodLobby = () => {
               <div className=" bg-gray-200 rounded-xl p-1 text-black flex justify-between items-center">
                 <label htmlFor="ranajky">Dinner </label>
                 <div className="flex gap-2  ">
-                  <p>{totalKcal5} &nbsp; kcal</p>
+                  <p>{totalKcal5} kcal</p>
                   <Link
                     href="/food"
                     className=" text-white bg-sky-500 rounded-full"
@@ -600,7 +611,7 @@ const FoodLobby = () => {
               <div className=" bg-gray-200 rounded-xl p-1 text-black flex justify-between items-center">
                 <label htmlFor="ranajky">Second dinner </label>
                 <div className="flex gap-2  ">
-                  <p>{totalKcal6} &nbsp; kcal</p>
+                  <p>{totalKcal6} kcal</p>
                   <Link
                     href="/food"
                     className=" text-white bg-sky-500 rounded-full"
@@ -621,7 +632,13 @@ const FoodLobby = () => {
               <div className=" bg-gray-200 rounded-xl p-1 text-black flex justify-between items-center">
                 <label htmlFor="ranajky">Activities </label>
                 <div className="flex gap-2  ">
-                  <p>-56 kcal</p>
+                  <p>
+                    {(activities.filter(
+                      (entry) => entry.userId === userId)
+                    ).reduce((acc, activity) => acc + activity.kcal, 0) ||
+                      0}{" "}
+                    kcal
+                  </p>
                   <Link
                     href="/activities"
                     className=" text-white bg-sky-500 rounded-full"
@@ -630,6 +647,14 @@ const FoodLobby = () => {
                   </Link>
                 </div>
               </div>
+              {activities
+                .filter((entry) => entry.userId === userId)
+                .map((activity) => (
+                  <div key={activity.id} className="flex gap-5 justify-between">
+                    <p>{activity.title}</p>
+                    <p className="text-gray-500">{activity.kcal} kcal</p>
+                  </div>
+                ))}
             </div>
           )}
         </div>
