@@ -139,6 +139,14 @@ const Activities = () => {
       const quantityFinal = parseFloat(
         activitiesSelections[item.id]?.quantity || 1
       );
+
+      // Calculate dynamic kcal based on quantity and time
+      const dynamicKcal = (
+        parseFloat(item.kcal) *
+        quantityFinal *
+        (optionHundred / 60)
+      ).toFixed(1);
+
       const data = {
         title: item.title,
         date: activitiesDates[item.title] || selectedDate,
@@ -146,7 +154,7 @@ const Activities = () => {
         activityId: item.id,
         quantity: quantityFinal,
         option: optionHundred,
-        kcal: item.kcal.toFixed(1),
+        kcal: dynamicKcal, // Use the calculated kcal
       };
 
       setLoading(true);
@@ -171,6 +179,7 @@ const Activities = () => {
       console.error(error);
     }
   };
+
 
   const getCurrentDate = (date) => {
     if (!date) {

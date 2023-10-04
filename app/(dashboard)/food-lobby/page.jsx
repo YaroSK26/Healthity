@@ -1,11 +1,14 @@
 "use client";
-import { ArrowLeft, ArrowRight, Plus, Settings } from "lucide-react";
+import { ArrowLeft, ArrowRight, Plus, Settings, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useClerk } from "@clerk/clerk-react";
 import axios from "axios";
+import { toast } from "react-hot-toast";
+import { withSwal } from "react-sweetalert2";
 
-const FoodLobby = () => {
+
+const FoodLobby = ({swal}) => {
   const [active, setActive] = useState("overview");
   const [foodSettings, setFoodSettings] = useState("");
   const [loading, setLoading] = useState(false);
@@ -118,7 +121,83 @@ const FoodLobby = () => {
          console.error("Error fetching food data:", error);
        });
    }
+
+
+   
   }, [userId,date]);
+
+
+  const handleDelete = (entryId) => {
+    // Send a request to your API to delete the entry
+    axios.delete(`/api/food?id=${entryId}`); // Use "id" instead of "userId" in the query parameter
+    swal
+      .fire({
+        title: "Are you sure you want to delete this?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Yes, delete",
+        reverseButtons: true,
+      })
+      .then((response) => {
+        // Update state to remove the deleted entry
+        setBreakfast((prevBreakfast) =>
+          prevBreakfast.filter((item) => item.id !== entryId)
+        );
+        setSnack((prevSnack) =>
+          prevSnack.filter((item) => item.id !== entryId)
+        );
+        setLunch((prevLunch) =>
+          prevLunch.filter((item) => item.id !== entryId)
+        );
+        setOlovrant((prevOlovrant) =>
+          prevOlovrant.filter((item) => item.id !== entryId)
+        );
+        setDinner((prevDinner) =>
+          prevDinner.filter((item) => item.id !== entryId)
+        );
+        setSecondDinner((prevSecondDinner) =>
+          prevSecondDinner.filter((item) => item.id !== entryId)
+        );
+
+        toast.success("Deleted!");
+        // You may need to do similar updates for other meal categories
+      })
+      .catch((error) => {
+        console.error("Error deleting entry:", error);
+      })
+      .finally(() => {
+        location.reload();
+      });
+
+    axios.delete(`/api/activities?id=${entryId}`); // Use "id" instead of "userId" in the query parameter
+    swal
+      .fire({
+        title: "Are you sure you want to delete this?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Yes, delete",
+        reverseButtons: true,
+      })
+      .then((response) => {
+        // Update state to remove the deleted entry
+   
+         setActivities((prevActivities) =>
+           prevActivities.filter((item) => item.id !== entryId)
+         );
+        toast.success("Deleted!");
+        // You may need to do similar updates for other meal categories
+      })
+      .catch((error) => {
+        console.error("Error deleting entry:", error);
+      })
+      .finally(() => {
+        location.reload();
+      });
+
+   
+  };
 
   const sum = [
     {
@@ -519,11 +598,17 @@ const FoodLobby = () => {
                 </div>
               </div>
               {breakfast.map((item) => (
-                <p key={item.title}>
+                <p className="flex justify-between" key={item._id}>
                   {item.title} &nbsp;
                   <span className="text-gray-500">
                     {item.quantity} * {item.option}g/ml &nbsp; {item.kcal} kcal
+                    &nbsp;
                   </span>
+                  <Trash2
+                    onClick={() => handleDelete(item._id)}
+                    style={{ cursor: "pointer" }}
+                    color="#ff0000"
+                  />
                 </p>
               ))}
               <div className=" bg-gray-200 rounded-xl p-1 text-black flex justify-between items-center">
@@ -539,12 +624,17 @@ const FoodLobby = () => {
                 </div>
               </div>
               {snack.map((item) => (
-                <p key={item.title}>
+                <p className="flex justify-between" key={item._id}>
                   {item.title} &nbsp;
                   <span className="text-gray-500">
                     {item.quantity} * {item.option}g/ml &nbsp; {item.kcal} kcal
+                    &nbsp;
                   </span>
-                  {item.kcal}
+                  <Trash2
+                    onClick={() => handleDelete(item._id)}
+                    style={{ cursor: "pointer" }}
+                    color="#ff0000"
+                  />
                 </p>
               ))}
               <div className=" bg-gray-200 rounded-xl p-1 text-black flex justify-between items-center">
@@ -561,11 +651,17 @@ const FoodLobby = () => {
                 </div>
               </div>
               {lunch.map((item) => (
-                <p key={item.title} className="flex justify-between">
+                <p key={item._id} className="flex justify-between">
                   {item.title} &nbsp;
                   <span className="text-gray-500 ">
                     {item.quantity} * {item.option}g/ml &nbsp; {item.kcal} kcal
+                    &nbsp;
                   </span>
+                  <Trash2
+                    onClick={() => handleDelete(item._id)}
+                    style={{ cursor: "pointer" }}
+                    color="#ff0000"
+                  />
                 </p>
               ))}
               <div className=" bg-gray-200 rounded-xl p-1 text-black flex justify-between items-center">
@@ -581,11 +677,17 @@ const FoodLobby = () => {
                 </div>
               </div>
               {olovrant.map((item) => (
-                <p key={item.title}>
+                <p className="flex justify-between" key={item._id}>
                   {item.title} &nbsp;
                   <span className="text-gray-500">
                     {item.quantity} * {item.option}g/ml &nbsp; {item.kcal} kcal
+                    &nbsp;
                   </span>
+                  <Trash2
+                    onClick={() => handleDelete(item._id)}
+                    style={{ cursor: "pointer" }}
+                    color="#ff0000"
+                  />
                 </p>
               ))}
               <div className=" bg-gray-200 rounded-xl p-1 text-black flex justify-between items-center">
@@ -601,11 +703,17 @@ const FoodLobby = () => {
                 </div>
               </div>
               {dinner.map((item) => (
-                <p key={item.title}>
+                <p className="flex justify-between" key={item._id}>
                   {item.title} &nbsp;
                   <span className="text-gray-500">
                     {item.quantity} * {item.option}g/ml &nbsp; {item.kcal} kcal
+                    &nbsp;
                   </span>
+                  <Trash2
+                    onClick={() => handleDelete(item._id)}
+                    style={{ cursor: "pointer" }}
+                    color="#ff0000"
+                  />
                 </p>
               ))}
               <div className=" bg-gray-200 rounded-xl p-1 text-black flex justify-between items-center">
@@ -621,11 +729,17 @@ const FoodLobby = () => {
                 </div>
               </div>
               {secondDinner.map((item) => (
-                <p key={item.title}>
+                <p className="flex" key={item._id}>
                   {item.title} &nbsp;
                   <span className="text-gray-500">
                     {item.quantity} * {item.option}g/ml &nbsp; {item.kcal} kcal
+                    &nbsp;
                   </span>
+                  <Trash2
+                    onClick={() => handleDelete(item._id)}
+                    style={{ cursor: "pointer" }}
+                    color="#ff0000"
+                  />
                 </p>
               ))}
 
@@ -633,9 +747,9 @@ const FoodLobby = () => {
                 <label htmlFor="ranajky">Activities </label>
                 <div className="flex gap-2  ">
                   <p>
-                    {(activities.filter(
-                      (entry) => entry.userId === userId)
-                    ).reduce((acc, activity) => acc + activity.kcal, 0) ||
+                    {activities
+                      .filter((entry) => entry.userId === userId)
+                      .reduce((acc, activity) => acc + activity.kcal, 0) ||
                       0}{" "}
                     kcal
                   </p>
@@ -650,9 +764,14 @@ const FoodLobby = () => {
               {activities
                 .filter((entry) => entry.userId === userId)
                 .map((activity) => (
-                  <div key={activity.id} className="flex gap-5 justify-between">
+                  <div key={activity.id} className="flex gap-3 justify-between">
                     <p>{activity.title}</p>
                     <p className="text-gray-500">{activity.kcal} kcal</p>
+                    <Trash2
+                      onClick={() => handleDelete(activity._id)}
+                      style={{ cursor: "pointer" }}
+                      color="#ff0000"
+                    />
                   </div>
                 ))}
             </div>
@@ -663,4 +782,4 @@ const FoodLobby = () => {
   );
 };
 
-export default FoodLobby;
+export default withSwal(FoodLobby);
