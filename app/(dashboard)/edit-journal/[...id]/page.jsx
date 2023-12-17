@@ -4,6 +4,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { withSwal } from "react-sweetalert2";
+import Link from "next/link";
 
 const EditPage = ({ swal }) => {
   const [journal, setJournal] = useState("");
@@ -128,6 +129,18 @@ const EditPage = ({ swal }) => {
           </button>
         </div>
       </form>
+      <footer className="text-gray-200 w-full h-16 bg-teal-600 text-lg flex justify-center items-center">
+        <div className="">
+          &copy; Copyright all right reserved. Created by{" "}
+          <Link
+            target="_blank"
+            href={"https://jaroslav-portfolio.vercel.app/"}
+            className="underline"
+          >
+            Jaroslav Barabáš
+          </Link>
+        </div>
+      </footer>
     </div>
   );
 };

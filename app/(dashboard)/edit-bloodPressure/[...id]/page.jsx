@@ -4,6 +4,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { withSwal } from "react-sweetalert2";
+import Footer from "../../../../components/Footer";
 
 const EditPage = ({ swal }) => {
   const [value, setValue] = useState("");
@@ -99,6 +100,7 @@ const EditPage = ({ swal }) => {
           Submit
         </button>
       </div>
+      <Footer></Footer>
     </div>
   );
 };

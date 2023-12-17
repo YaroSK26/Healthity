@@ -6,6 +6,7 @@
   import axios from "axios";
   import { toast } from "react-hot-toast";
   import { withSwal } from "react-sweetalert2";
+  import Footer from "../../../components/Footer";
 
 
   const FoodLobby = ({swal}) => {
@@ -379,8 +380,8 @@
     
 
     return (
-      <div className="flex flex-col justify-center items-center mt-5 gap-5  ">
-        <h1 className="text-center text-3xl font-bold mb-4">Food tracker</h1>
+      <div className="flex flex-col justify-center items-center my-4 gap-5  ">
+        <h1 className="text-center text-3xl font-bold mb-2">Food tracker</h1>
 
         <div className="flex flex-col gap-5 border-2 p-1 border-black w-[320px] justify-start items-center max-h-[475px]  min-h-[350px] overflow-auto rounded-2xl mb-5">
           <div className="flex relative gap-5 mt-2">
@@ -814,6 +815,7 @@
             )}
           </div>
         </div>
+        <Footer></Footer>
       </div>
     );
   };

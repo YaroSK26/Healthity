@@ -7,6 +7,7 @@
   import { toast } from "react-hot-toast";
   import { useClerk } from "@clerk/clerk-react";
   import { useRouter } from "next/navigation";
+import Footer from "../../../components/Footer";
 
   const FoodSettings = () => {
       const [sum,setSum] = useState("2000")
@@ -178,6 +179,7 @@ useEffect(() => {
             Save
           </button>
         </div>
+        <Footer></Footer>
       </div>
     );
   }

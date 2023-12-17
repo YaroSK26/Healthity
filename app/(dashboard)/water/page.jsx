@@ -5,6 +5,7 @@ import { toast } from "react-hot-toast";
 import { useClerk } from "@clerk/clerk-react";
 import { Pencil, Trash2 } from "lucide-react";
 import Link from "next/link";
+import Footer from "../../../components/Footer";
 
 const Water = () => {
   const [water, setWater] = useState("250");
@@ -181,6 +182,7 @@ const Water = () => {
           </h1>
         )}
       </div>
+      <Footer></Footer>
     </div>
   );
 };

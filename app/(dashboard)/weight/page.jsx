@@ -6,6 +6,8 @@ import { toast } from "react-hot-toast";
 import { useClerk } from "@clerk/clerk-react";
 import { Pencil, Trash2 } from "lucide-react";
 import Link from "next/link";
+import Footer from "../../../components/Footer";
+
 
 
 const Weight = () => {
@@ -90,7 +92,7 @@ useEffect(() => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center mt-5 gap-5">
+    <div className="flex flex-col justify-center items-center mt-5 gap-5 ">
       <form onSubmit={handleSubmit}>
         <h1 className="text-center text-3xl font-bold mb-4">
           Enter your weight
@@ -127,6 +129,7 @@ useEffect(() => {
 
       {loading === true && <div>Loading...</div>}
       {realProduct.length === 0 && <div>No weight found.</div>}
+      <Footer></Footer>
     </div>
   );
 };

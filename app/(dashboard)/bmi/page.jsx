@@ -1,7 +1,8 @@
 "use client"
 import axios from "axios"
-    import { useEffect, useState } from "react"
-    import { useClerk } from "@clerk/clerk-react";
+import { useEffect, useState } from "react"
+import { useClerk } from "@clerk/clerk-react";
+import Footer from "../../../components/Footer";
 
 const BmiPage = () => {
     const [weight, setWeight] = useState(null)
@@ -71,7 +72,7 @@ useEffect(() => {
         className="flex flex-col justify-center items-center gap-2"
       >
         <h1 className="text-center text-3xl font-bold mb-4">
-          Enter your weight to see your BMI
+          Enter your stats to see your BMI
         </h1>
         <input
           className="border border-teal-500  m-1 pl-1 p-1 rounded-lg w-56"
@@ -108,6 +109,8 @@ useEffect(() => {
           Your BMI is {bmi} . {bmiPerson()} weight.
         </h2>
       )}
+
+      <Footer></Footer>
     </div>
   );
 }

@@ -6,6 +6,7 @@ import { toast } from "react-hot-toast";
 import { useClerk } from "@clerk/clerk-react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import Link from "next/link";
+import Footer from "../../../components/Footer";
 
 const Food = () => {
   const food = [
@@ -610,6 +611,7 @@ const Food = () => {
                     className="bg-gray-200 rounded-xl w-12 text-center"
                     type="number"
                     min={1}
+                    max={5}
                     step={0.5}
                     value={foodSelections[item.id]?.quantity || 1}
                     onChange={(e) => {
@@ -649,6 +651,18 @@ const Food = () => {
           </form>
         ))}
       </div>
+      <footer className="text-gray-200 w-full h-16 bg-teal-600 text-lg flex justify-center items-center">
+        <div className="">
+          &copy; Copyright all right reserved. Created by{" "}
+          <Link
+            target="_blank"
+            href={"https://jaroslav-portfolio.vercel.app/"}
+            className="underline"
+          >
+            Jaroslav Barabáš
+          </Link>
+        </div>
+      </footer>
     </div>
   );
 };

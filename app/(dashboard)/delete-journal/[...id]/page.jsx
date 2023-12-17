@@ -5,6 +5,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { withSwal } from "react-sweetalert2";
+import Footer from "../../../../components/Footer";
 
 const DeletePage = ({ swal }) => {
   const [value, setValue] = useState("");
@@ -98,6 +99,7 @@ const DeletePage = ({ swal }) => {
           Delete
         </button>
       </div>
+      <Footer></Footer>
     </div>
   );
 };

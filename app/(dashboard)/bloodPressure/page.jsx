@@ -6,6 +6,7 @@ import { toast } from "react-hot-toast";
 import { useClerk } from "@clerk/clerk-react";
 import { Pencil, Trash2 } from "lucide-react";
 import Link from "next/link";
+import Footer from "../../../components/Footer";
 
 
 const BloodPressure = () => {
@@ -160,6 +161,7 @@ useEffect(() => {
 
       {loading === true && <div>Loading...</div>}
       {realProduct.length === 0 && <div>No blood pressure found.</div>}
+      <Footer></Footer>
     </div>
   );
 };
