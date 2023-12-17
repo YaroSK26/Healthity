@@ -1,15 +1,13 @@
-"use client"
+"use client";
 
 import React, { useEffect, useState } from "react";
 import SheetMenu from "./SheetMenu";
 import Link from "next/link";
 import { UserButton, useAuth } from "@clerk/nextjs";
 
-
-
 const NavBar = () => {
-  
   const [windowWidth, setWindowWidth] = useState(null);
+  const { isSignedIn } = useAuth();
 
   useEffect(() => {
     // Function to update window width
@@ -28,8 +26,6 @@ const NavBar = () => {
       window.removeEventListener("resize", updateWindowWidth);
     };
   }, []);
-
-      const { isSignedIn } = useAuth();
 
   return (
     <nav className="text-gray-200 w-full h-16 bg-teal-600 text-lg">
@@ -59,16 +55,16 @@ const NavBar = () => {
               <li>
                 <Link href={"/food-lobby"}>Tracker</Link>
               </li>
-              <UserButton afterSignOutUrl="/"></UserButton>
+              <UserButton afterSignOutUrl="/sign-in"></UserButton>
             </ul>
           </nav>
         )}
 
         {!isSignedIn && (
           <div className="flex gap-3 justify-end w-full">
-            <div className="flex items-center flex-col  justify-center  gap-x-2">
-              <Link href={isSignedIn ? "/" : "/sign-up"}>
-                <button className="rounded-full  text-white p-2 text-xl border  ">
+            <div className="flex items-center flex-col justify-center gap-x-2">
+              <Link href={"/sign-up"}>
+                <button className="rounded-full text-white p-2 text-xl border">
                   Get Started
                 </button>
               </Link>

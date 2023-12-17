@@ -57,7 +57,7 @@ const Activities = () => {
     {
       id: "6",
       title: "Hockey training",
-      src: "https://thecoachessite.com/wp-content/uploads/2019/02/Oct28_Cover_.png",
+      src: "https://www.hockeyskillstraining.com/wp-content/uploads/2021/12/over-training.jpg",
       opt1: "15min",
       opt2: "30min",
       opt3: "60min",

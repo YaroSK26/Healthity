@@ -1,14 +1,18 @@
 /* eslint-disable @next/next/no-img-element */
-"use client"
-
+"use client";
 
 import { motion } from "framer-motion";
 import { fadeIn, textVariant } from "../utils/motion";
 import { Tilt } from "react-tilt";
 import Link from "next/link";
-import { BookMarked, CupSoda, HeartPulse, Radar, ScaleIcon, UtensilsCrossed } from "lucide-react";
-
-
+import {
+  BookMarked,
+  CupSoda,
+  HeartPulse,
+  Radar,
+  ScaleIcon,
+  UtensilsCrossed,
+} from "lucide-react";
 
 const services = [
   {
@@ -57,7 +61,7 @@ const services = [
   },
 ];
 
-const ServiceCard = ({ index, title, icon, button,href,bg }) => (
+const ServiceCard = ({ index, title, icon, button, href, bg }) => (
   <Tilt className="xs:w-[250px] w-[300px] mx-2">
     <motion.div
       variants={fadeIn("right", "spring", index * 0.5, 0.75)}
@@ -71,16 +75,14 @@ const ServiceCard = ({ index, title, icon, button,href,bg }) => (
         }}
         className={`${bg}  rounded-[20px] py-5 px-12 min-h-[280px] flex justify-evenly items-center flex-col mb-5`}
       >
-        <div  className="w-12 h-12 text-white object-contain">
-          {icon}
-        </div>
-        
+        <div className="w-12 h-12 text-white object-contain">{icon}</div>
 
-        <h1 className="text-white text-2xl font-bold text-center">
-          {title}
-        </h1>
+        <h1 className="text-white text-2xl font-bold text-center">{title}</h1>
 
-        <Link href={href} className="bg-gray-200 p-2 rounded-lg drop-shadow-lg ">
+        <Link
+          href={href}
+          className="bg-gray-200 p-2 rounded-lg drop-shadow-lg "
+        >
           {button}
         </Link>
       </div>
@@ -103,5 +105,4 @@ const Services = () => {
   );
 };
 
-
-export default Services
+export default Services;

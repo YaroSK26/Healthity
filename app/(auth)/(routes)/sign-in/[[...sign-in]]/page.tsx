@@ -1,6 +1,5 @@
 "use client"
 
-import { useAuth } from "@clerk/nextjs";
 import {
   BookMarked,
   CupSoda,
@@ -12,7 +11,7 @@ import {
 import Link from "next/link";
 
 export default function Page() {
-      const { isSignedIn } = useAuth();
+    
 
   return (
     <div className="mt-20">
@@ -25,7 +24,7 @@ export default function Page() {
         <UtensilsCrossed className="w-20 h-20" />
       </div>
       <div className="flex items-center flex-col  justify-center  gap-x-2">
-        <Link href={isSignedIn ? "/" : "/sign-up"}>
+        <Link href={"/sign-up"}>
           <button className="rounded-full gradient text-white  p-2 text-3xl mb-1 ">
             Get Started
           </button>

@@ -5,48 +5,56 @@ import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { withSwal } from "react-sweetalert2";
 
-const EditPage = ({swal}) => {
+const EditPage = ({ swal }) => {
   const [value, setValue] = useState("");
   const [value2, setValue2] = useState("");
   const [id, setId] = useState("");
 
-useEffect(() => {
-  const DeleteAxios = axios.get(`/api/bloodPressure`);
+  // Base URL for API requests
+  const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "";
 
-  DeleteAxios.then((response) => {
-    const data = response.data; // Get data from the response
-    const dataBloodPressure = data.BloodPressures;
+  useEffect(() => {
+    axios
+      .get(`${API_BASE_URL}/api/bloodPressure`)
+      .then((response) => {
+        const data = response.data;
+        if (data && data.BloodPressures && Array.isArray(data.BloodPressures)) {
+          const dataBloodPressure = data.BloodPressures;
 
-    // Filter by _id and extract the first match
-    const matchingEditId = dataBloodPressure.find(
-      (entry) =>
-        `http://localhost:3000/edit-bloodPressure/${entry._id}` === window.location.href
-    );
+          const currentUrl = window.location.href;
+          const matchingEditId = dataBloodPressure.find(
+            (entry) =>
+              `${window.location.origin}/edit-bloodPressure/${entry._id}` ===
+              currentUrl
+          );
 
-    if (matchingEditId) {
-      setId(matchingEditId._id); // Set the id state with the found id
-      setValue(matchingEditId.bloodPressureUp); // Set the value state
-      setValue2(matchingEditId.bloodPressureDown); // Set the value state
-    }
-  });
-}, []);
-
+          if (matchingEditId) {
+            setId(matchingEditId._id);
+            setValue(matchingEditId.bloodPressureUp);
+            setValue2(matchingEditId.bloodPressureDown);
+          }
+        } else {
+          console.error("Unexpected response structure:", data);
+        }
+      })
+      .catch((error) => {
+        console.error("API request failed:", error);
+      });
+  }, []);
 
   const handleEdit = () => {
-          axios
-            .put(`/api/bloodPressure?id=${id}`, {
-              bloodPressureUp: value,
-              bloodPressureDown: value2,
-            })
-            .then((response) => {
-              // Handle success or display a message to the user
-              toast.success("Edited!");
-              window.location.href = "http://localhost:3000/bloodPressure";
-            })
-            .catch((error) => {
-              // Handle errors or display an error message to the user
-              swal.fire("Error", "Failed to edit the blood pressure.", "error");
-            });
+    axios
+      .put(`${API_BASE_URL}/api/bloodPressure?id=${id}`, {
+        bloodPressureUp: value,
+        bloodPressureDown: value2,
+      })
+      .then(() => {
+        toast.success("Edited!");
+        window.location.href = `${window.location.origin}/bloodPressure`;
+      })
+      .catch((error) => {
+        swal.fire("Error", "Failed to edit the blood pressure.", "error");
+      });
   };
 
   return (

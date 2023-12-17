@@ -2,109 +2,92 @@
 
 import { useClerk } from "@clerk/nextjs";
 import axios from "axios";
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { withSwal } from "react-sweetalert2";
 
-const DeletePage = ({swal}) => {
+const DeletePage = ({ swal }) => {
+  const [value, setValue] = useState("");
+  const [value2, setValue2] = useState("");
+  const [id, setId] = useState("");
+  const [loading, setLoading] = useState(true);
+  const clerk = useClerk();
 
+  // Base URL for API requests
+  const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "";
 
-    const [value, setValue] = useState("");
-    const [value2, setValue2] = useState("");
-    const [id, setId] = useState("");
-    const [loading,setLoading] = useState(true);
-     const clerk = useClerk();
-
- 
-
-    const getCurrentDate = () => {
+  const getCurrentDate = () => {
     const today = new Date();
     const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, "0"); // Leden je 0
+    const month = String(today.getMonth() + 1).padStart(2, "0");
     const day = String(today.getDate()).padStart(2, "0");
     return `${year}-${month}-${day}`;
-    };
+  };
 
-    useEffect(() => {
-     
-      const DeleteAxios = axios.get(`/api/bloodPressure`); 
-   
+  useEffect(() => {
+    axios.get(`${API_BASE_URL}/api/bloodPressure`).then((response) => {
+      const data = response.data;
+      const dataBloodPressures = data.BloodPressures;
+      setLoading(true);
 
-      DeleteAxios.then((response) => {
-        const data = response.data; // Získajte údaje z odpovede
-        const dataBloodPressures = data.BloodPressures;
-            setLoading(true);
+      const currentUrl = window.location.href;
+      const matchingDeleteId = dataBloodPressures.filter(
+        (entry) =>
+          `${window.location.origin}/delete-bloodPressure/${entry._id}` ===
+          currentUrl
+      );
 
-        // Filtrujte podľa _id
-        const matchingDeleteId = dataBloodPressures.filter(
-          (entry) =>
-            `http://localhost:3000/delete-bloodPressure/${entry._id}` ===
-            window.location.href
-        );
-        if (matchingDeleteId.length > 0) {
-          setId(matchingDeleteId[0]._id);
-          setValue(matchingDeleteId[0].bloodPressureUp); // Nastavte hodnotu na prvý nájdený záznam (predpokladáme, že ide o unikátne ID)
-          setValue2(matchingDeleteId[0].bloodPressureDown); // Nastavte hodnotu na prvý nájdený záznam (predpokladáme, že ide o unikátne ID)
-          setLoading(false);
-        
-        }
-
-        
-      });
-    }, []);
-    
-const handleDelete = () => {
-  swal
-    .fire({
-      title: "Are you sure you want to delete this bloodPressure?",
-      type: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#DD6B55",
-      confirmButtonText: "Yes, delete",
-      reverseButtons: true,
-    })
-    .then(function (result) {
-      if (result.isConfirmed) {
-        // If the user confirms the deletion
-        axios
-          .delete(`/api/bloodPressure?id=${id}`) // Assuming the endpoint includes the ID
-          .then((response) => {
-            // Handle success or display a message to the user
-            toast.success("Deleted!");
-
-            // Check if there are any other bloodPressure entries for the current day
-            axios.get("/api/bloodPressure").then((response) => {
-              const data = response.data;
-              const dataBloodPressures = data.BloodPressures;
-
-              if (!clerk.user) {
-                return null; // Případně můžete zobrazit nějakou chybu, pokud uživatel není přihlášen
-              }
-              const userId = clerk.user.id;
-
-              const hasEntriesForCurrentDay = dataBloodPressures.some(
-                (entry) =>
-                  entry.date === getCurrentDate() && entry.userId === userId
-              );
-
-             if (!hasEntriesForCurrentDay) {
-                // If there are no more entries for the current day, set canSubmit to true
-                if (userId === response.data.userId ) {
-                  return
-                }
-                
-              }
-
-              // Redirect to the bloodPressure page
-              window.location.href = "http://localhost:3000/bloodPressure";
-            });
-          });
+      if (matchingDeleteId.length > 0) {
+        setId(matchingDeleteId[0]._id);
+        setValue(matchingDeleteId[0].bloodPressureUp);
+        setValue2(matchingDeleteId[0].bloodPressureDown);
+        setLoading(false);
       }
     });
-};
+  }, []);
 
+  const handleDelete = () => {
+    swal
+      .fire({
+        title: "Are you sure you want to delete this blood pressure?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Yes, delete",
+        reverseButtons: true,
+      })
+      .then(function (result) {
+        if (result.isConfirmed) {
+          axios
+            .delete(`${API_BASE_URL}/api/bloodPressure?id=${id}`)
+            .then(() => {
+              toast.success("Deleted!");
+              axios
+                .get(`${API_BASE_URL}/api/bloodPressure`)
+                .then((response) => {
+                  const data = response.data;
+                  const dataBloodPressures = data.BloodPressures;
+                  if (!clerk.user) return null;
 
-    
+                  const userId = clerk.user.id;
+                  const hasEntriesForCurrentDay = dataBloodPressures.some(
+                    (entry) =>
+                      entry.date === getCurrentDate() && entry.userId === userId
+                  );
+
+                  if (
+                    !hasEntriesForCurrentDay &&
+                    userId === response.data.userId
+                  ) {
+                    // Additional logic if needed
+                  }
+
+                  window.location.href = `${window.location.origin}/bloodPressure`;
+                });
+            });
+        }
+      });
+  };
 
   return (
     <div className=" flex-col flex   items-center justify-center mt-10 gap-2">
@@ -136,6 +119,6 @@ const handleDelete = () => {
       </div>
     </div>
   );
-}
+};
 
 export default withSwal( DeletePage)

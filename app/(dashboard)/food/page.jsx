@@ -610,7 +610,7 @@ const Food = () => {
                     className="bg-gray-200 rounded-xl w-12 text-center"
                     type="number"
                     min={1}
-                    step={0.1}
+                    step={0.5}
                     value={foodSelections[item.id]?.quantity || 1}
                     onChange={(e) => {
                       setFoodSelections((prevSelections) => ({

@@ -5,55 +5,68 @@ import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { withSwal } from "react-sweetalert2";
 
-const EditPage = ({swal}) => {
- const [journal, setJournal] = useState("");
- const [theme, setTheme] = useState("");
- const [problem, setProblem] = useState("");
- const [result, setResult] = useState("");
-const [id, setId] = useState("");
+const EditPage = ({ swal }) => {
+  const [journal, setJournal] = useState("");
+  const [theme, setTheme] = useState("");
+  const [problem, setProblem] = useState("");
+  const [result, setResult] = useState("");
+  const [id, setId] = useState("");
 
-useEffect(() => {
-  const DeleteAxios = axios.get(`/api/journal`);
+  // Base URL for API requests
+  const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "";
 
-  DeleteAxios.then((response) => {
-    const data = response.data; // Get data from the response
-    const dataJournals = data.Journals;
+  useEffect(() => {
+    axios
+      .get(`${API_BASE_URL}/api/journal`)
+      .then((response) => {
+        const data = response.data;
+        if (data && data.Journals && Array.isArray(data.Journals)) {
+          const dataJournals = data.Journals;
 
-    // Filter by _id and extract the first match
-    const matchingEditId = dataJournals.find(
-      (entry) =>
-        `http://localhost:3000/edit-journal/${entry._id}` === window.location.href
-    );
+          const currentUrl = window.location.href;
+          const matchingEditId = dataJournals.find(
+            (entry) =>
+              `${window.location.origin}/edit-journal/${entry._id}` ===
+              currentUrl
+          );
 
-    if (matchingEditId) {
-      setId(matchingEditId._id); // Set the id state with the found id
-      setTheme(matchingEditId.theme); 
-      setProblem(matchingEditId.problem); 
-      setJournal(matchingEditId.journal); 
-      setResult(matchingEditId.result); 
-    }
-  });
-}, []);
-
+          if (matchingEditId) {
+            setId(matchingEditId._id);
+            setTheme(matchingEditId.theme);
+            setProblem(matchingEditId.problem);
+            setJournal(matchingEditId.journal);
+            setResult(matchingEditId.result);
+          }
+        } else {
+          console.error("Unexpected response structure:", data);
+        }
+      })
+      .catch((error) => {
+        console.error("API request failed:", error);
+      });
+  }, []);
 
   const handleEdit = (event) => {
     event.preventDefault();
     axios
-      .put(`/api/journal?id=${id}`, { theme, problem, journal, result })
-      .then((response) => {
-        // Handle success or display a message to the user
-        toast.success("Edited!");
-        window.location.href = "http://localhost:3000/journal";
+      .put(`${API_BASE_URL}/api/journal?id=${id}`, {
+        theme,
+        problem,
+        journal,
+        result,
       })
-      .catch((error) => {
-        // Handle errors or display an error message to the user
-        swal.fire("Error", "Failed to edit the  journal.", "error");
+      .then(() => {
+        toast.success("Edited!");
+        window.location.href = `${window.location.origin}/journal`;
+      })
+      .catch(() => {
+        swal.fire("Error", "Failed to edit the journal.", "error");
       });
   };
 
   return (
     <div className=" flex-col flex   items-center justify-center mt-10 gap-2">
-      <form >
+      <form>
         <h1 className="text-center text-3xl font-bold mb-4">
           Edit your journal
         </h1>
@@ -107,7 +120,10 @@ useEffect(() => {
             placeholder="What have you come to? what did you learn after you wrote? what did you do wrong?"
           />
 
-          <button onClick={(event) => handleEdit(event)} className="bg-black p-2 rounded-lg mt-1 text-white">
+          <button
+            onClick={(event) => handleEdit(event)}
+            className="bg-black p-2 rounded-lg mt-1 text-white"
+          >
             Save
           </button>
         </div>

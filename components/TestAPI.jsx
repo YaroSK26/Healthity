@@ -1,34 +1,41 @@
 "use client"
-import {useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const TestAPI = () => {
-  const [quote, setQuote] = useState("Loading...");
-  const [author, setAuthor] = useState("Loading...");
+  const [quote, setQuote] = useState({
+    text: "Loading...",
+    author: "Loading...",
+  });
+  useEffect(() => {
+    const getQuote = async () => {
+      try {
+        const response = await fetch("/quotes.json");
+        const data = await response.json(); // 'data' now contains the whole JSON object
+        const quotesArray = data.quotes; // Access the 'quotes' array from the JSON object
+        const randomQuote =
+          quotesArray[Math.floor(Math.random() * quotesArray.length)];
+        setQuote(randomQuote);
+      } catch (error) {
+        console.error("Error fetching quote:", error);
+        setQuote({ text: "Failed to load quote", author: "" });
+      }
+    };
 
-  const url = "https://api.themotivate365.com/stoic-quote";
-
-  const getQuote = async () => {
-    const response = await fetch(url);
-    const data = await response.json();
-    const finalQuote = data["quote"];
-    const FinalAuthor = data["author"];
-    setQuote(finalQuote);
-    setAuthor(FinalAuthor);
-    
-  };
+    getQuote();
+  }, []); // Empty dependency array to run once on mount
 
   useEffect(() => {
-    getQuote();
-  }, []);
+    console.log(quote);
+  }, [quote]); // This will log the quote every time it changes
 
   return (
     <div className="flex flex-col items-center lg:w-[30rem] w-[20rem] ">
-      <h1 className="font-bold text-2xl my-4 text-center  font-barlow ">{quote}</h1>
-      <p className="italic">{author}</p>
+      <h1 className="font-bold text-2xl my-4 text-center font-barlow">
+        {quote.text}
+      </h1>
+      <p className="italic">{quote.author}</p>
     </div>
   );
-}
-
-
+};
 
 export default TestAPI;
