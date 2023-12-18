@@ -8,6 +8,7 @@ import { Pencil, Trash2 } from "lucide-react";
 import Link from "next/link";
 import Footer from "../../../components/Footer";
 
+
 const Journal = () => {
   const [journal, setJournal] = useState("");
   const [theme, setTheme] = useState("");
@@ -96,7 +97,7 @@ useEffect(() => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center mt-5 gap-5 my-0">
+    <div className=" relative flex flex-col justify-center items-center mt-5 gap-5 my-0">
       <form onSubmit={handleSubmit}>
         <h1 className="text-center text-3xl font-bold mb-4">
           Start your journal
@@ -204,18 +205,7 @@ useEffect(() => {
       {loading === true && <div>Loading...</div>}
       {realProduct.length === 0 && <div>No journal found.</div>}
 
-      <footer className="text-gray-200 w-full h-16 bg-teal-600 text-lg flex justify-center items-center">
-        <div className="">
-          &copy; Copyright all right reserved. Created by{" "}
-          <Link
-            target="_blank"
-            href={"https://jaroslav-portfolio.vercel.app/"}
-            className="underline"
-          >
-            Jaroslav Barabáš
-          </Link>
-        </div>
-      </footer>
+      <Footer></Footer>
     </div>
   );
 };

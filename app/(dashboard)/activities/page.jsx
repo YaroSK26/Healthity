@@ -325,7 +325,7 @@ const Activities = () => {
                   </select>
                 </div>
               </div>
-              <button className="bg-sky-500 p-1 rounded-lg text-white w-[90%] ">
+              <button className="bg-teal-700 p-1 rounded-lg text-white w-[90%] ">
                 Add
               </button>
             </div>

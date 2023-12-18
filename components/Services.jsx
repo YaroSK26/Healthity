@@ -57,7 +57,7 @@ const services = [
     icon: <UtensilsCrossed className="w-12 h-12" />,
     button: "Try me!",
     href: "/food-lobby",
-    bg: "bg-sky-500",
+    bg: "bg-teal-700",
   },
 ];
 
@@ -101,6 +101,7 @@ const Services = () => {
       {services.map((service, index) => (
         <ServiceCard key={service.title} index={index} {...service} />
       ))}
+      
     </motion.div>
   );
 };

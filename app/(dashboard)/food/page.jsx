@@ -538,7 +538,7 @@ const Food = () => {
   const [selectedDate, setSelectedDate] = useState(getCurrentDate());
 
   return (
-    <div className="flex flex-col justify-center items-center mt-5 gap-5 relative">
+    <div className=" relative flex flex-col justify-center items-center mt-5 gap-5 relative">
       <Link href={"food-lobby"} className="absolute left-3 top-2">
         <ArrowLeft />
       </Link>
@@ -644,25 +644,14 @@ const Food = () => {
                   </select>
                 </div>
               </div>
-              <button className="bg-sky-500 p-1 rounded-lg text-white w-[90%] ">
+              <button className="bg-teal-700 p-1 rounded-lg text-white w-[90%] ">
                 Add
               </button>
             </div>
           </form>
         ))}
       </div>
-      <footer className="text-gray-200 w-full h-16 bg-teal-600 text-lg flex justify-center items-center">
-        <div className="">
-          &copy; Copyright all right reserved. Created by{" "}
-          <Link
-            target="_blank"
-            href={"https://jaroslav-portfolio.vercel.app/"}
-            className="underline"
-          >
-            Jaroslav Barabáš
-          </Link>
-        </div>
-      </footer>
+      <Footer></Footer>
     </div>
   );
 };

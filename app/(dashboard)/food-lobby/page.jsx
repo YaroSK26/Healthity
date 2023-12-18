@@ -380,7 +380,7 @@
     
 
     return (
-      <div className="flex flex-col justify-center items-center my-4 gap-5  ">
+      <div className=" relative flex flex-col justify-center items-center mt-4 gap-5  ">
         <h1 className="text-center text-3xl font-bold mb-2">Food tracker</h1>
 
         <div className="flex flex-col gap-5 border-2 p-1 border-black w-[320px] justify-start items-center max-h-[475px]  min-h-[350px] overflow-auto rounded-2xl mb-5">
@@ -441,7 +441,7 @@
                     </p>
                     <Link
                       href="/food"
-                      className="absolute left-[100px] bottom-5 text-white bg-sky-500 rounded-full"
+                      className="absolute left-[100px] bottom-5 text-white bg-teal-700 rounded-full"
                     >
                       <Plus />
                     </Link>
@@ -457,7 +457,7 @@
                     </p>
                     <Link
                       href="/activities"
-                      className="absolute left-[252px] bottom-5 text-white bg-sky-500 rounded-full"
+                      className="absolute left-[252px] bottom-5 text-white bg-teal-700 rounded-full"
                     >
                       <Plus />
                     </Link>
@@ -469,7 +469,7 @@
                       className="flex justify-center items-center gap-2"
                       key={item.title}
                     >
-                      <div className="rounded-full  bg-sky-500 w-[55px] h-[55px] flex justify-center items-center">
+                      <div className="rounded-full  bg-teal-700 w-[55px] h-[55px] flex justify-center items-center">
                         <div className="rounded-full  bg-white w-10 h-10 text-gray-900 p-1 justify-center flex items-center">
                           {item.percent()}%
                         </div>
@@ -498,7 +498,7 @@
                 </div>
                 <div className="grid grid-cols-2 gap-1">
                   <div className="flex gap-2 mt-6 mb-2">
-                    <div className="rounded-full  bg-sky-500 w-[55px] h-[55px] flex justify-center items-center mt-2">
+                    <div className="rounded-full  bg-teal-700 w-[55px] h-[55px] flex justify-center items-center mt-2">
                       <div className="rounded-full  bg-white w-10 h-10 text-gray-900 p-1 justify-center flex items-center">
                         {totalG.length > 0 &&
                           `${(
@@ -528,7 +528,7 @@
                   </div>
 
                   <div className="flex gap-2 mt-6 mb-2">
-                    <div className="rounded-full  bg-sky-500 w-[55px] h-[55px] flex justify-center items-center mt-2">
+                    <div className="rounded-full  bg-teal-700 w-[55px] h-[55px] flex justify-center items-center mt-2">
                       <div className="rounded-full  bg-white w-10 h-10 text-gray-900 p-1 justify-center flex items-center">
                         {totalG.length > 0 &&
                           `${(
@@ -558,7 +558,7 @@
                   </div>
 
                   <div className="flex gap-2 mt-6 mb-2">
-                    <div className="rounded-full  bg-sky-500 w-[55px] h-[55px] flex justify-center items-center mt-2">
+                    <div className="rounded-full  bg-teal-700 w-[55px] h-[55px] flex justify-center items-center mt-2">
                       <div className="rounded-full  bg-white w-10 h-10 text-gray-900 p-1 justify-center flex items-center">
                         {totalG.length > 0 &&
                           `${(
@@ -588,7 +588,7 @@
                   </div>
 
                   <div className="flex gap-2 mt-6 mb-2">
-                    <div className="rounded-full  bg-sky-500 w-[55px] h-[55px] flex justify-center items-center mt-2">
+                    <div className="rounded-full  bg-teal-700 w-[55px] h-[55px] flex justify-center items-center mt-2">
                       <div className="rounded-full  bg-white w-10 h-10 text-gray-900 p-1 justify-center flex items-center">
                         {totalG.length > 0 &&
                           `${(
@@ -628,7 +628,7 @@
                     <p>{totalKcal} kcal</p>
                     <Link
                       href="/food"
-                      className=" text-white bg-sky-500 rounded-full"
+                      className=" text-white bg-teal-700 rounded-full"
                     >
                       <Plus />
                     </Link>
@@ -654,7 +654,7 @@
                     <p>{totalKcal2} kcal</p>
                     <Link
                       href="/food"
-                      className=" text-white bg-sky-500 rounded-full"
+                      className=" text-white bg-teal-700 rounded-full"
                     >
                       <Plus />
                     </Link>
@@ -681,7 +681,7 @@
 
                     <Link
                       href="/food"
-                      className=" text-white bg-sky-500 rounded-full"
+                      className=" text-white bg-teal-700 rounded-full"
                     >
                       <Plus />
                     </Link>
@@ -707,7 +707,7 @@
                     <p>{totalKcal4} kcal</p>
                     <Link
                       href="/food"
-                      className=" text-white bg-sky-500 rounded-full"
+                      className=" text-white bg-teal-700 rounded-full"
                     >
                       <Plus />
                     </Link>
@@ -733,7 +733,7 @@
                     <p>{totalKcal5} kcal</p>
                     <Link
                       href="/food"
-                      className=" text-white bg-sky-500 rounded-full"
+                      className=" text-white bg-teal-700 rounded-full"
                     >
                       <Plus />
                     </Link>
@@ -759,7 +759,7 @@
                     <p>{totalKcal6} kcal</p>
                     <Link
                       href="/food"
-                      className=" text-white bg-sky-500 rounded-full"
+                      className=" text-white bg-teal-700 rounded-full"
                     >
                       <Plus />
                     </Link>
@@ -792,7 +792,7 @@
                     </p>
                     <Link
                       href="/activities"
-                      className=" text-white bg-sky-500 rounded-full"
+                      className=" text-white bg-teal-700 rounded-full"
                     >
                       <Plus />
                     </Link>

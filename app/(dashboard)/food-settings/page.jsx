@@ -107,7 +107,7 @@ useEffect(() => {
       <div className="flex flex-col justify-center items-center mt-5 gap-5">
         <h1 className="text-center text-3xl font-bold mb-4">Food tracker</h1>
         {loading && <p className="text-center">Loading...</p>}
-        
+
         <div className="w-[300px]  h-[300px] rounded-xl border-2 border-black flex flex-col items-center relative ">
           <Link href={"food-lobby"} className="absolute left-2 top-2">
             <ArrowLeft />
@@ -174,7 +174,7 @@ useEffect(() => {
           <button
             onClick={handleClick}
             disabled={loading}
-            className="bg-sky-500 rounded-2xl text-white w-[90%] mt-4 p-[6px] "
+            className="bg-teal-700 rounded-2xl text-white w-[90%] mt-4 p-[6px] "
           >
             Save
           </button>
