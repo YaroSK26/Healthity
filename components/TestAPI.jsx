@@ -31,7 +31,7 @@ const TestAPI = () => {
   return (
     <div className="flex flex-col items-center lg:w-[30rem] w-[20rem] ">
       <h1 className="font-bold text-2xl my-4 text-center font-barlow">
-        {quote.text}
+        {quote.text}  
       </h1>
       <p className="italic">{quote.author}</p>
     </div>

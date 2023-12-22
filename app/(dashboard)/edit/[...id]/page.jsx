@@ -63,7 +63,7 @@ const EditPage = ({ swal }) => {
           placeholder="Enter weight"
         />
         <button
-          className="bg-black p-1 rounded-lg text-white w-16"
+          className="bg-teal-700 p-1 rounded-lg text-white w-16"
           onClick={() => handleEdit()}
         >
           Save

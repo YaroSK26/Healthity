@@ -538,8 +538,8 @@ const Food = () => {
   const [selectedDate, setSelectedDate] = useState(getCurrentDate());
 
   return (
-    <div className=" relative flex flex-col justify-center items-center mt-5 gap-5 relative">
-      <Link href={"food-lobby"} className="absolute left-3 top-2">
+    <div className="  flex flex-col justify-center items-center mt-5 gap-5 ">
+      <Link href={"food-lobby"} className="absolute left-3 top-24">
         <ArrowLeft />
       </Link>
       <h1 className="text-center text-3xl font-bold mb-4">Food menu</h1>
@@ -553,7 +553,8 @@ const Food = () => {
         />
       </form>
       <div className="flex gap-3 justify-center  items-center flex-wrap mb-3">
-        {filteredFood.map((item) => (
+          {filteredFood.length > 0 ? (
+        filteredFood.map((item) => (
           <form key={item.title} onSubmit={(e) => handleAddFood(e, item)}>
             <div className="w-60 h-[350px] border border-sky-500 rounded-xl flex flex-col items-center gap-3">
               <img
@@ -649,9 +650,12 @@ const Food = () => {
               </button>
             </div>
           </form>
-        ))}
+        ))): (
+            <div className="text-lg font-bold text-center">
+            No food found
+          </div>
+        )}
       </div>
-      <Footer></Footer>
     </div>
   );
 };

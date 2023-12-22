@@ -94,7 +94,7 @@ const EditPage = ({ swal }) => {
         />
 
         <button
-          className="bg-black p-1 my-2 rounded-lg text-white w-full"
+          className="bg-teal-500 p-1 my-2 rounded-lg text-white w-full"
           onClick={() => handleEdit()}
         >
           Submit

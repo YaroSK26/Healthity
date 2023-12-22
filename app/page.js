@@ -8,6 +8,7 @@ export default function Home() {
       <TestAPI></TestAPI>
       <Services></Services>
       <Footer></Footer>
+      
     </div>
   );
 }
