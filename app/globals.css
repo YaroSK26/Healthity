@@ -102,3 +102,8 @@ nav ul li :hover::before {
 
 nav ul li :hover::after {
     width: 0%;}
+
+    .a {
+    @apply text-4xl  h-[90vh] w-[100vw] flex justify-center items-center;
+    }
+   
