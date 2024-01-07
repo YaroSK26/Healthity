@@ -66,51 +66,53 @@ useEffect(() => {
      
 
   return (
-    <div className="flex flex-col justify-center w-full items-center mt-5 gap-5">
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col justify-center items-center gap-2"
-      >
-        <h1 className="text-center text-3xl font-bold mb-4">
-          Enter your stats to see your BMI
-        </h1>
-        <input
-          className="border border-teal-500  m-1 pl-1 p-1 rounded-lg w-56"
-          type="number"
-          step="0.1"
-          placeholder="Your Weight (kg)"
-          min={1}
-          max={150}
-          required
-          value={lastWeight || weight}
-          onChange={(e) =>
-            setWeight(e.target.value) || setLastWeight(e.target.value)
-          }
-        />
-        <input
-          className="border border-teal-500 m-1 pl-1 p-1 rounded-lg w-56"
-          type="number"
-          step="1"
-          placeholder="Your Height (cm)"
-          min={1}
-          max={250}
-          required
-          value={height}
-          onChange={(e) => setHeight(e.target.value)}
-        />
-        <div>
-          <button className="bg-teal-500 p-1 rounded-lg text-white w-56">
-            Submit
-          </button>
-        </div>
-      </form>
-      {bmi !== null && bmiPerson !== null && (
-        <h2 className="text-teal-500">
-          Your BMI is {bmi} . {bmiPerson()} weight.
-        </h2>
-      )}
+    <div>
+      <div className="min-h-screen flex flex-col justify-center w-full items-center  gap-5">
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col justify-center items-center gap-2"
+        >
+          <h1 className="text-center text-3xl font-bold mb-4">
+            Enter your stats to see your BMI
+          </h1>
+          <input
+            className="border border-teal-500  m-1 pl-1 p-1 rounded-lg w-56"
+            type="number"
+            step="0.1"
+            placeholder="Your Weight (kg)"
+            min={1}
+            max={150}
+            required
+            value={lastWeight || weight}
+            onChange={(e) =>
+              setWeight(e.target.value) || setLastWeight(e.target.value)
+            }
+          />
+          <input
+            className="border border-teal-500 m-1 pl-1 p-1 rounded-lg w-56"
+            type="number"
+            step="1"
+            placeholder="Your Height (cm)"
+            min={1}
+            max={250}
+            required
+            value={height}
+            onChange={(e) => setHeight(e.target.value)}
+          />
+          <div>
+            <button className="bg-teal-500 p-1 rounded-lg text-white w-56">
+              Submit
+            </button>
+          </div>
+        </form>
+        {bmi !== null && bmiPerson !== null && (
+          <h2 className="text-teal-500">
+            Your BMI is {bmi} . {bmiPerson()} weight.
+          </h2>
+        )}
 
-      <Footer></Footer>
+      </div>
+        <Footer></Footer>
     </div>
   );
 }

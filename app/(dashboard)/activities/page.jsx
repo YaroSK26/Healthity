@@ -6,6 +6,7 @@ import { toast } from "react-hot-toast";
 import { useClerk } from "@clerk/clerk-react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import Link from "next/link";
+import Footer from "../../../components/Footer";
 
 const Activities = () => {
   const activities = [
@@ -243,101 +244,104 @@ const Activities = () => {
     return `${dynamicKcal} kcal`;
   };
   return (
-    <div className="flex flex-col justify-center items-center mt-5 gap-5 ">
-      <Link href={"food-lobby"} className="absolute left-3 top-24">
-        <ArrowLeft />
-      </Link>
-      <h1 className="text-center text-3xl font-bold mb-4">Activities</h1>
-      <form>
-        <label>Filter: </label>
-        <input
-          type="text"
-          className="bg-gray-200 rounded-xl p-1"
-          value={filterLetter}
-          onChange={(e) => setFilterLetter(e.target.value)}
-        />
-      </form>
-      <div className="flex gap-3 justify-center  items-center flex-wrap mb-3">
-        {filteredActivities.length > 0 ? (
-          filteredActivities.map((item) => (
-            <form key={item.title} onSubmit={(e) => handleAddFood(e, item)}>
-              <div className="w-60 h-[350px] border border-sky-500 rounded-xl flex flex-col items-center gap-3">
-                <img
-                  className="rounded-xl p-1 w-60 h-36 "
-                  src={item.src}
-                  alt=""
-                />
-                <p className="text-lg font-bold text-center">{item.title}</p>
+    <div>
+      <div className="min-h-screen flex flex-col justify-center items-center pt-20 gap-5 ">
+        <Link href={"food-lobby"} className="absolute left-3 top-24">
+          <ArrowLeft />
+        </Link>
+        <h1 className="text-center text-3xl font-bold mb-4">Activities</h1>
+        <form>
+          <label>Filter: </label>
+          <input
+            type="text"
+            className="bg-gray-200 rounded-xl p-1"
+            value={filterLetter}
+            onChange={(e) => setFilterLetter(e.target.value)}
+          />
+        </form>
+        <div className="flex gap-3 justify-center  items-center flex-wrap mb-3">
+          {filteredActivities.length > 0 ? (
+            filteredActivities.map((item) => (
+              <form key={item.title} onSubmit={(e) => handleAddFood(e, item)}>
+                <div className="w-60 h-[350px] border border-sky-500 rounded-xl flex flex-col items-center gap-3">
+                  <img
+                    className="rounded-xl p-1 w-60 h-36 "
+                    src={item.src}
+                    alt=""
+                  />
+                  <p className="text-lg font-bold text-center">{item.title}</p>
 
-                <div className="flex  gap-2">
-                  <ArrowLeft onClick={() => handleDateChange(-1, item)} />
-                  <div className="flex gap-2 ">
-                    <input
-                      className="bg-gray-200 rounded-xl text-center"
-                      type="date"
-                      value={activitiesDates[item.title] || selectedDate}
-                      onChange={(e) => handleInputChange(e, item)}
-                    />
+                  <div className="flex  gap-2">
+                    <ArrowLeft onClick={() => handleDateChange(-1, item)} />
+                    <div className="flex gap-2 ">
+                      <input
+                        className="bg-gray-200 rounded-xl text-center"
+                        type="date"
+                        value={activitiesDates[item.title] || selectedDate}
+                        onChange={(e) => handleInputChange(e, item)}
+                      />
+                    </div>
+
+                    <ArrowRight onClick={() => handleDateChange(1, item)} />
                   </div>
 
-                  <ArrowRight onClick={() => handleDateChange(1, item)} />
+                  <div className="flex flex-col">
+                    <div className="text-xl font-bold mb-3 text-center">
+                      {calculateDynamicKcal(item)}
+                    </div>
+                    <div className="flex">
+                      <label htmlFor="quantity">Quantity: &nbsp; </label>
+                      <input
+                        className="bg-gray-200 rounded-xl w-12 text-center"
+                        type="number"
+                        min={1}
+                        max={5}
+                        step={1}
+                        value={activitiesSelections[item.id]?.quantity || 1}
+                        onChange={(e) => {
+                          setActivitiesSelections((prevSelections) => ({
+                            ...prevSelections,
+                            [item.id]: {
+                              ...prevSelections[item.id],
+                              quantity: e.target.value,
+                            },
+                          }));
+                        }}
+                      />
+                      ×
+                      <select
+                        className="bg-gray-200 rounded-xl"
+                        value={activitiesSelections[item.id]?.option || ""}
+                        onChange={(e) => {
+                          setActivitiesSelections((prevSelections) => ({
+                            ...prevSelections,
+                            [item.id]: {
+                              ...prevSelections[item.id],
+                              option: e.target.value,
+                            },
+                          }));
+                        }}
+                      >
+                        <option>{item.opt1}</option>
+                        <option>{item.opt2}</option>
+                        <option>{item.opt3}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <button className="bg-teal-700 p-1 rounded-lg text-white w-[90%] ">
+                    Add
+                  </button>
                 </div>
-
-                <div className="flex flex-col">
-                  <div className="text-xl font-bold mb-3 text-center">
-                    {calculateDynamicKcal(item)}
-                  </div>
-                  <div className="flex">
-                    <label htmlFor="quantity">Quantity: &nbsp; </label>
-                    <input
-                      className="bg-gray-200 rounded-xl w-12 text-center"
-                      type="number"
-                      min={1}
-                      max={5}
-                      step={1}
-                      value={activitiesSelections[item.id]?.quantity || 1}
-                      onChange={(e) => {
-                        setActivitiesSelections((prevSelections) => ({
-                          ...prevSelections,
-                          [item.id]: {
-                            ...prevSelections[item.id],
-                            quantity: e.target.value,
-                          },
-                        }));
-                      }}
-                    />
-                    ×
-                    <select
-                      className="bg-gray-200 rounded-xl"
-                      value={activitiesSelections[item.id]?.option || ""}
-                      onChange={(e) => {
-                        setActivitiesSelections((prevSelections) => ({
-                          ...prevSelections,
-                          [item.id]: {
-                            ...prevSelections[item.id],
-                            option: e.target.value,
-                          },
-                        }));
-                      }}
-                    >
-                      <option>{item.opt1}</option>
-                      <option>{item.opt2}</option>
-                      <option>{item.opt3}</option>
-                    </select>
-                  </div>
-                </div>
-                <button className="bg-teal-700 p-1 rounded-lg text-white w-[90%] ">
-                  Add
-                </button>
-              </div>
-            </form>
-          ))
-        ) : (
-          <div className="text-lg font-bold text-center">
-            No activities found
-          </div>
-        )}
+              </form>
+            ))
+          ) : (
+            <div className="text-lg font-bold text-center">
+              No activities found
+            </div>
+          )}
+        </div>
       </div>
+      <Footer></Footer>
     </div>
   );
 };

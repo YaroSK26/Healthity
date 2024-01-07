@@ -59,46 +59,48 @@ const EditPage = ({ swal }) => {
   };
 
   return (
-    <div className=" flex-col flex   items-center justify-center mt-10 gap-2">
-      <h1 className="text-center text-3xl font-bold mb-4">
-        Edit blood pressure
-      </h1>
-      <div className="w-52  flex flex-col  justify-center items-center m-auto">
-        <label htmlFor="up" className="mr-auto font-semibold ">
-          Your high blood pressure
-        </label>
-        <input
-          id="up"
-          onChange={(e) => setValue(e.target.value)}
-          value={value}
-          className="border border-teal-700 m-1 pl-1 p-1 rounded-lg w-56"
-          type="number"
-          step="1"
-          placeholder="Your high blood pressure"
-          min={60}
-          max={200}
-        />
-        <label htmlFor="down" className="mr-auto font-semibold ">
-          Your low blood pressure
-        </label>
-        <input
-          id="down"
-          onChange={(e) => setValue2(e.target.value)}
-          value={value2}
-          className="border border-teal-700 m-1 pl-1 p-1 rounded-lg w-56"
-          type="number"
-          step="1"
-          placeholder="Your low blood pressure"
-          min={40}
-          max={130}
-        />
+    <div>
+      <div className="min-h-screen flex-col flex   items-center justify-center  gap-2">
+        <div className="w-52  flex flex-col  justify-center items-center m-auto">
+          <h1 className="text-center text-3xl font-bold mb-4">
+            Edit blood pressure
+          </h1>
+          <label htmlFor="up" className="mr-auto font-semibold ">
+            Your high blood pressure
+          </label>
+          <input
+            id="up"
+            onChange={(e) => setValue(e.target.value)}
+            value={value}
+            className="border border-teal-700 m-1 pl-1 p-1 rounded-lg w-56"
+            type="number"
+            step="1"
+            placeholder="Your high blood pressure"
+            min={60}
+            max={200}
+          />
+          <label htmlFor="down" className="mr-auto font-semibold ">
+            Your low blood pressure
+          </label>
+          <input
+            id="down"
+            onChange={(e) => setValue2(e.target.value)}
+            value={value2}
+            className="border border-teal-700 m-1 pl-1 p-1 rounded-lg w-56"
+            type="number"
+            step="1"
+            placeholder="Your low blood pressure"
+            min={40}
+            max={130}
+          />
 
-        <button
-          className="bg-teal-500 p-1 my-2 rounded-lg text-white w-full"
-          onClick={() => handleEdit()}
-        >
-          Submit
-        </button>
+          <button
+            className="bg-teal-500 p-1 my-2 rounded-lg text-white w-full"
+            onClick={() => handleEdit()}
+          >
+            Submit
+          </button>
+        </div>
       </div>
       <Footer></Footer>
     </div>

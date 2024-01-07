@@ -53,27 +53,29 @@ const EditPage = ({ swal }) => {
   };
 
   return (
-    <div className="flex-col flex items-center justify-center mt-10 gap-2">
-      <h1 className="text-center text-3xl font-bold mb-4">Edit water cup</h1>
-      <div>
-        <select
-          className="border border-teal-500 m-1 pl-1 p-1 rounded-lg w-56"
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-        >
-          <option value="250">250</option>
-          <option value="500">500</option>
-          <option value="750">750</option>
-          <option value="1000">1000</option>
-        </select>
-        <button
-          className="bg-black p-1 rounded-lg text-white w-16"
-          onClick={() => handleEdit()}
-        >
-          Save
-        </button>
+    <div>
+      <div className="flex-col flex items-center justify-center min-h-screen gap-2">
+        <h1 className="text-center text-3xl font-bold mb-4">Edit water cup</h1>
+        <div>
+          <select
+            className="border border-teal-500 m-1 pl-1 p-1 rounded-lg w-56"
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+          >
+            <option value="250">250</option>
+            <option value="500">500</option>
+            <option value="750">750</option>
+            <option value="1000">1000</option>
+          </select>
+          <button
+            className="bg-black p-1 rounded-lg text-white w-16"
+            onClick={() => handleEdit()}
+          >
+            Save
+          </button>
+        </div>
       </div>
-      <Footer></Footer>
+        <Footer></Footer>
     </div>
   );
 };

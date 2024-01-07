@@ -13,6 +13,7 @@ import {
   ScaleIcon,
   UtensilsCrossed,
 } from "lucide-react";
+import Footer from "./Footer";
 
 const services = [
   {
@@ -92,17 +93,19 @@ const ServiceCard = ({ index, title, icon, button, href, bg }) => (
 
 const Services = () => {
   return (
-    <motion.div
-      variants={textVariant()}
-      initial="hidden"
-      animate="show"
-      className="mt-20 flex flex-wrap gap-10 justify-center"
-    >
-      {services.map((service, index) => (
-        <ServiceCard key={service.title} index={index} {...service} />
-      ))}
-      
-    </motion.div>
+    <div className="w-full">
+      <motion.div
+        variants={textVariant()}
+        initial="hidden"
+        animate="show"
+        className=" min-h-screen mt-20 flex flex-wrap gap-10 justify-center"
+      >
+        {services.map((service, index) => (
+          <ServiceCard key={service.title} index={index} {...service} />
+        ))}
+      </motion.div>
+      <Footer></Footer>
+    </div>
   );
 };
 

@@ -87,25 +87,27 @@ const DeletePage = ({ swal }) => {
   };
 
   return (
-    <div className=" flex-col flex   items-center justify-center mt-10 gap-2">
-      <h1 className="text-center text-3xl font-bold mb-4">Delete cup</h1>
-      <div>
-        <input
-          className="border border-teal-500 m-1 pl-1 p-1 bg-gray-200 rounded-lg w-56"
-          type="text"
-          value={value}
-          disabled
-          placeholder="Loading..."
-        />
-        <button
-          className="bg-red-600 p-1 rounded-lg text-white w-16"
-          disabled={loading}
-          onClick={() => handleDelete()}
-        >
-          Delete
-        </button>
+    <div>
+      <div className="min-h-screen flex-col flex   items-center justify-center  gap-2">
+        <h1 className="text-center text-3xl font-bold mb-4">Delete cup</h1>
+        <div>
+          <input
+            className="border border-teal-500 m-1 pl-1 p-1 bg-gray-200 rounded-lg w-56"
+            type="text"
+            value={value}
+            disabled
+            placeholder="Loading..."
+          />
+          <button
+            className="bg-red-600 p-1 rounded-lg text-white w-16"
+            disabled={loading}
+            onClick={() => handleDelete()}
+          >
+            Delete
+          </button>
+        </div>
       </div>
-      <Footer></Footer>
+        <Footer></Footer>
     </div>
   );
 };

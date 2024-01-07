@@ -92,43 +92,48 @@ useEffect(() => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center mt-5 gap-5 ">
-      <form onSubmit={handleSubmit}>
-        <h1 className="text-center text-3xl font-bold mb-4">
-          Enter your weight
-        </h1>
-        <input
-          onChange={(e) => setWeight(e.target.value)}
-          value={weight}
-          className="border border-teal-700 m-1 pl-1 p-1 rounded-lg w-56"
-          type="number"
-          step="0.1"
-          placeholder="Your Weight today (kg/lbs)"
-          min={1}
-          max={150}
-        />
-        <button className="bg-teal-700 p-1 rounded-lg text-white">
-          Submit
-        </button>
-      </form>
+    <div>
+      <div className="flex flex-col justify-center items-center  gap-5 min-h-screen ">
+        <form onSubmit={handleSubmit}>
+          <h1 className="text-center text-3xl font-bold mb-4">
+            Enter your weight
+          </h1>
+          <input
+            onChange={(e) => setWeight(e.target.value)}
+            value={weight}
+            className="border border-teal-700 m-1 pl-1 p-1 rounded-lg w-56"
+            type="number"
+            step="0.1"
+            placeholder="Your Weight today (kg/lbs)"
+            min={1}
+            max={150}
+          />
+          <button className="bg-teal-700 p-1 rounded-lg text-white">
+            Submit
+          </button>
+        </form>
 
-      {loading === false &&
-        realProduct.map((e) => (
-          <div key={e._id} className="static">
-            <p className="m-0 p-0 static flex gap-3">
-              {e.date}: <span className="font-bold">{e.weight}kg</span>{" "}
-              <Link href={"/edit/" + e._id} className="hover:cursor-pointer">
-                <Pencil />
-              </Link>
-              <Link href={"/delete/" + e._id} className="hover:cursor-pointer">
-                <Trash2 color="#ff0000" />
-              </Link>
-            </p>
-          </div>
-        ))}
+        {loading === false &&
+          realProduct.map((e) => (
+            <div key={e._id} className="static">
+              <p className="m-0 p-0 static flex gap-3">
+                {e.date}: <span className="font-bold">{e.weight}kg</span>{" "}
+                <Link href={"/edit/" + e._id} className="hover:cursor-pointer">
+                  <Pencil />
+                </Link>
+                <Link
+                  href={"/delete/" + e._id}
+                  className="hover:cursor-pointer"
+                >
+                  <Trash2 color="#ff0000" />
+                </Link>
+              </p>
+            </div>
+          ))}
 
-      {loading === true && <div>Loading...</div>}
-      {realProduct.length === 0 && <div>No weight found.</div>}
+        {loading === true && <div>Loading...</div>}
+        {realProduct.length === 0 && <div>No weight found.</div>}
+      </div>
       <Footer></Footer>
     </div>
   );

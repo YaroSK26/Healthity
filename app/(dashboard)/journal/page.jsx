@@ -97,115 +97,117 @@ useEffect(() => {
   };
 
   return (
-    <div className=" relative flex flex-col justify-center items-center mt-5 gap-5 my-0">
-      <form onSubmit={handleSubmit}>
-        <h1 className="text-center text-3xl font-bold mb-4">
-          Start your journal
-        </h1>
-        <div className="flex flex-col ">
-          <label htmlFor="a" className="text-center font-bold text-lg">
-            Theme
-          </label>
-          <textarea
-            id="a"
-            onChange={(e) => setTheme(e.target.value)}
-            value={theme}
-            className="border border-sky-600 m-1 pl-1 p-1 rounded-lg  resize-none h-32"
-            type="text"
-            placeholder="what do you want to write about, what is your topic? "
-            required
-          />
-          <label htmlFor="b" className="text-center font-bold text-lg">
-            Problem
-          </label>
-          <textarea
-            id="b"
-            onChange={(e) => setProblem(e.target.value)}
-            value={problem}
-            className="border border-sky-600 m-1 pl-1 p-1 rounded-lg resize-none h-32"
-            type="text"
-            required
-            placeholder="what problem forced you to start writing this journal?  "
-          />
-          <label htmlFor="c" className="text-center font-bold text-lg">
-            Journal
-          </label>
-          <textarea
-            id="c"
-            onChange={(e) => setJournal(e.target.value)}
-            value={journal}
-            className="border border-sky-600 m-1 pl-1 p-1 rounded-lg resize-none h-32"
-            type="text"
-            required
-            placeholder="Write the thoughts you have in your head here."
-          />
-          <label htmlFor="d" className="text-center font-bold text-lg">
-            Result
-          </label>
-          <textarea
-            id="d"
-            onChange={(e) => setResult(e.target.value)}
-            value={result}
-            className="border border-sky-600 m-1 pl-1 p-1 rounded-lg resize-none h-32"
-            type="text"
-            required
-            placeholder="What have you come to? what did you learn after you wrote? what did you do wrong?"
-          />
+    <div>
+      <div className="min-h-screen relative flex flex-col justify-center items-center pt-20 gap-5 my-0">
+        <form onSubmit={handleSubmit}>
+          <h1 className="text-center text-3xl font-bold mb-4">
+            Start your journal
+          </h1>
+          <div className="flex flex-col ">
+            <label htmlFor="a" className="text-center font-bold text-lg">
+              Theme
+            </label>
+            <textarea
+              id="a"
+              onChange={(e) => setTheme(e.target.value)}
+              value={theme}
+              className="border border-sky-600 m-1 pl-1 p-1 rounded-lg  resize-none h-32"
+              type="text"
+              placeholder="what do you want to write about, what is your topic? "
+              required
+            />
+            <label htmlFor="b" className="text-center font-bold text-lg">
+              Problem
+            </label>
+            <textarea
+              id="b"
+              onChange={(e) => setProblem(e.target.value)}
+              value={problem}
+              className="border border-sky-600 m-1 pl-1 p-1 rounded-lg resize-none h-32"
+              type="text"
+              required
+              placeholder="what problem forced you to start writing this journal?  "
+            />
+            <label htmlFor="c" className="text-center font-bold text-lg">
+              Journal
+            </label>
+            <textarea
+              id="c"
+              onChange={(e) => setJournal(e.target.value)}
+              value={journal}
+              className="border border-sky-600 m-1 pl-1 p-1 rounded-lg resize-none h-32"
+              type="text"
+              required
+              placeholder="Write the thoughts you have in your head here."
+            />
+            <label htmlFor="d" className="text-center font-bold text-lg">
+              Result
+            </label>
+            <textarea
+              id="d"
+              onChange={(e) => setResult(e.target.value)}
+              value={result}
+              className="border border-sky-600 m-1 pl-1 p-1 rounded-lg resize-none h-32"
+              type="text"
+              required
+              placeholder="What have you come to? what did you learn after you wrote? what did you do wrong?"
+            />
 
-          <button className="bg-sky-600 p-2 rounded-lg mt-1 text-white">
-            Submit
-          </button>
-        </div>
-      </form>
-
-      <h1 className="font-bold text-3xl mt-10">Your Journals</h1>
-
-      {loading === false &&
-        realProduct.map((e) => (
-          <div
-            key={e._id}
-            className="static border border-sky-600 shadow-xl p-4 rounded-lg  w-[300px] sm:w-[500px]"
-          >
-            <h1 className="font-bold text-2xl mb-2">{e.date}</h1>
-
-            <p>
-              <span className="font-bold">Theme: </span>
-              {e.theme}
-            </p>
-            <p>
-              <span className="font-bold">Problem: </span>
-              {e.problem}
-            </p>
-            <p>
-              <span className="font-bold">Journal: </span>
-              {e.journal}
-            </p>
-            <p>
-              <span className="font-bold">Result: </span>
-              {e.result}
-            </p>
-
-            <div className="flex mt-5 justify-center items-center gap-2">
-              <Link
-                href={"/edit-journal/" + e._id}
-                className="hover:cursor-pointer"
-              >
-                <Pencil className="w-12 h-12" />
-              </Link>
-              <Link
-                href={"/delete-journal/" + e._id}
-                className="hover:cursor-pointer"
-              >
-                <Trash2 color="#ff0000" className="w-12 h-12" />
-              </Link>
-            </div>
+            <button className="bg-sky-600 p-2 rounded-lg mt-1 text-white">
+              Submit
+            </button>
           </div>
-        ))}
+        </form>
 
-      {loading === true && <div>Loading...</div>}
-      {realProduct.length === 0 && <div>No journal found.</div>}
+        <h1 className="font-bold text-3xl mt-10">Your Journals</h1>
 
-      <Footer></Footer>
+        {loading === false &&
+          realProduct.map((e) => (
+            <div
+              key={e._id}
+              className="static border border-sky-600 shadow-xl p-4 rounded-lg  w-[300px] sm:w-[500px]"
+            >
+              <h1 className="font-bold text-2xl mb-2">{e.date}</h1>
+
+              <p>
+                <span className="font-bold">Theme: </span>
+                {e.theme}
+              </p>
+              <p>
+                <span className="font-bold">Problem: </span>
+                {e.problem}
+              </p>
+              <p>
+                <span className="font-bold">Journal: </span>
+                {e.journal}
+              </p>
+              <p>
+                <span className="font-bold">Result: </span>
+                {e.result}
+              </p>
+
+              <div className="flex mt-5 justify-center items-center gap-2">
+                <Link
+                  href={"/edit-journal/" + e._id}
+                  className="hover:cursor-pointer"
+                >
+                  <Pencil className="w-12 h-12" />
+                </Link>
+                <Link
+                  href={"/delete-journal/" + e._id}
+                  className="hover:cursor-pointer"
+                >
+                  <Trash2 color="#ff0000" className="w-12 h-12" />
+                </Link>
+              </div>
+            </div>
+          ))}
+
+        {loading === true && <div>Loading...</div>}
+        {realProduct.length === 0 && <div>No journal found.</div>}
+
+      </div>
+        <Footer></Footer>
     </div>
   );
 };

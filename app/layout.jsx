@@ -4,6 +4,7 @@ import NavBar from "../components/NavBar";
 import { ToasterProvider } from '../components/ToastProvider';
 import { ClerkProvider } from "@clerk/nextjs";
 import { CrispProvider } from '../components/CrispProvider';
+import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -20,6 +21,7 @@ export default function RootLayout({ children }) {
           <ToasterProvider />
           <NavBar></NavBar>
           {children}
+          <Analytics />
           <CrispProvider />
         </body>
       </html>

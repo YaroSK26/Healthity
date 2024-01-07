@@ -94,74 +94,76 @@ useEffect(() => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center mt-5 gap-5">
-      <form onSubmit={handleSubmit}>
-        <h1 className="text-center text-3xl font-bold mb-4">
-          Enter your blood pressure
-        </h1>
-        <div className="w-52  flex flex-col  justify-center items-center m-auto">
-          <label htmlFor="up" className="mr-auto font-semibold ">
-            Your high blood pressure
-          </label>
-          <input
-            id="up"
-            onChange={(e) => setBloodPressureUp(e.target.value)}
-            value={bloodPressureUp}
-            className="border border-teal-700 m-1 pl-1 p-1 rounded-lg w-56"
-            type="number"
-            step="1"
-            placeholder="Your upper blood pressure"
-            min={60}
-            max={200}
-          />
-          <label htmlFor="down" className="mr-auto font-semibold ">
-            Your low blood pressure
-          </label>
-          <input
-            id="down"
-            onChange={(e) => setBloodPressureDown(e.target.value)}
-            value={bloodPressureDown}
-            className="border border-teal-700 m-1 pl-1 p-1 rounded-lg w-56"
-            type="number"
-            step="1"
-            placeholder="Your lower blood pressure"
-            min={40}
-            max={130}
-          />
+    <div>
+      <div className=" min-h-screen flex flex-col justify-center items-center  gap-5">
+        <form onSubmit={handleSubmit}>
+          <h1 className="text-center text-3xl font-bold mb-4">
+            Enter your blood pressure
+          </h1>
+          <div className="w-52  flex flex-col  justify-center items-center m-auto">
+            <label htmlFor="up" className="mr-auto font-semibold ">
+              Your high blood pressure
+            </label>
+            <input
+              id="up"
+              onChange={(e) => setBloodPressureUp(e.target.value)}
+              value={bloodPressureUp}
+              className="border border-teal-700 m-1 pl-1 p-1 rounded-lg w-56"
+              type="number"
+              step="1"
+              placeholder="Your upper blood pressure"
+              min={60}
+              max={200}
+            />
+            <label htmlFor="down" className="mr-auto font-semibold ">
+              Your low blood pressure
+            </label>
+            <input
+              id="down"
+              onChange={(e) => setBloodPressureDown(e.target.value)}
+              value={bloodPressureDown}
+              className="border border-teal-700 m-1 pl-1 p-1 rounded-lg w-56"
+              type="number"
+              step="1"
+              placeholder="Your lower blood pressure"
+              min={40}
+              max={130}
+            />
 
-          <button className="bg-teal-500 p-1 mt-2 rounded-lg text-white w-full">
-            Submit
-          </button>
-        </div>
-      </form>
-
-      {loading === false &&
-        realProduct.map((e) => (
-          <div key={e._id} className="static">
-            <p className="m-0 p-0 static flex gap-3">
-              {e.date}:
-              <span className="font-bold">
-                {e.bloodPressureUp} / {e.bloodPressureDown}
-              </span>
-              <Link
-                href={"/edit-bloodPressure/" + e._id}
-                className="hover:cursor-pointer"
-              >
-                <Pencil />
-              </Link>
-              <Link
-                href={"/delete-bloodPressure/" + e._id}
-                className="hover:cursor-pointer"
-              >
-                <Trash2 color="#ff0000" />
-              </Link>
-            </p>
+            <button className="bg-teal-500 p-1 mt-2 rounded-lg text-white w-full">
+              Submit
+            </button>
           </div>
-        ))}
+        </form>
 
-      {loading === true && <div>Loading...</div>}
-      {realProduct.length === 0 && <div>No blood pressure found.</div>}
-      <Footer></Footer>
+        {loading === false &&
+          realProduct.map((e) => (
+            <div key={e._id} className="static">
+              <p className="m-0 p-0 static flex gap-3">
+                {e.date}:
+                <span className="font-bold">
+                  {e.bloodPressureUp} / {e.bloodPressureDown}
+                </span>
+                <Link
+                  href={"/edit-bloodPressure/" + e._id}
+                  className="hover:cursor-pointer"
+                >
+                  <Pencil />
+                </Link>
+                <Link
+                  href={"/delete-bloodPressure/" + e._id}
+                  className="hover:cursor-pointer"
+                >
+                  <Trash2 color="#ff0000" />
+                </Link>
+              </p>
+            </div>
+          ))}
+
+        {loading === true && <div>Loading...</div>}
+        {realProduct.length === 0 && <div>No blood pressure found.</div>}
+      </div>
+        <Footer></Footer>
     </div>
   );
 };

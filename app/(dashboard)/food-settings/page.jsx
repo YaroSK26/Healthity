@@ -104,82 +104,84 @@ useEffect(() => {
 
 
     return (
-      <div className="flex flex-col justify-center items-center mt-5 gap-5">
-        <h1 className="text-center text-3xl font-bold mb-4">Food tracker</h1>
-        {loading && <p className="text-center">Loading...</p>}
+      <div>
+        <div className="min-h-screen flex flex-col justify-center items-center  gap-5">
+          <h1 className="text-center text-3xl font-bold mb-4">Food tracker</h1>
+          {loading && <p className="text-center">Loading...</p>}
 
-        <div className="w-[300px]  h-[300px] rounded-xl border-2 border-black flex flex-col items-center relative ">
-          <Link href={"food-lobby"} className="absolute left-2 top-2">
-            <ArrowLeft />
-          </Link>
-          <h1 className="font-bold text-lg mt-2 mb-4">Settings</h1>
+          <div className="w-[300px]  h-[300px] rounded-xl border-2 border-black flex flex-col items-center relative ">
+            <Link href={"food-lobby"} className="absolute left-2 top-2">
+              <ArrowLeft />
+            </Link>
+            <h1 className="font-bold text-lg mt-2 mb-4">Settings</h1>
 
-          <div className="flex gap-2 flex-col ">
-            <div className="flex gap-2 justify-center items-center  ">
-              <label htmlFor="protein ">Sum</label>
-              <input
-                onChange={(e) => setSum(e.target.value)}
-                value={sum}
-                type="number"
-                className=" pl-1 w-48 border-sky-500 border-2 rounded-xl ml-auto"
-                placeholder="(kcal)"
-                required
-              />
+            <div className="flex gap-2 flex-col ">
+              <div className="flex gap-2 justify-center items-center  ">
+                <label htmlFor="protein ">Sum</label>
+                <input
+                  onChange={(e) => setSum(e.target.value)}
+                  value={sum}
+                  type="number"
+                  className=" pl-1 w-48 border-sky-500 border-2 rounded-xl ml-auto"
+                  placeholder="(kcal)"
+                  required
+                />
+              </div>
+              <div className="flex gap-2 justify-center items-center">
+                <label htmlFor="protein ">Protein</label>
+                <input
+                  onChange={(e) => setProtein(e.target.value)}
+                  value={protein}
+                  type="number"
+                  className=" pl-1 w-48 border-sky-500 border-2 rounded-xl  ml-auto"
+                  placeholder="(g)"
+                  required
+                />
+              </div>
+              <div className="flex gap-2 justify-center items-center ">
+                <label htmlFor="protein ">Carbs</label>
+                <input
+                  onChange={(e) => setCarbs(e.target.value)}
+                  value={carbs}
+                  type="number"
+                  className=" pl-1 w-48 border-sky-500 border-2 rounded-xl ml-auto"
+                  placeholder="(g)"
+                  required
+                />
+              </div>
+              <div className="flex gap-2 justify-center items-center">
+                <label htmlFor="protein ">Fat</label>
+                <input
+                  onChange={(e) => setFat(e.target.value)}
+                  value={fat}
+                  type="number"
+                  className=" pl-1 w-48 border-sky-500 border-2 rounded-xl ml-auto"
+                  placeholder="(g)"
+                  required
+                />
+              </div>
+              <div className="flex gap-2 justify-center items-center">
+                <label htmlFor="protein ">Roughage</label>
+                <input
+                  onChange={(e) => setRoughage(e.target.value)}
+                  value={roughage}
+                  type="number"
+                  className=" pl-1 w-48 border-sky-500 border-2 rounded-xl ml-auto"
+                  placeholder="(g)"
+                  required
+                />
+              </div>
             </div>
-            <div className="flex gap-2 justify-center items-center">
-              <label htmlFor="protein ">Protein</label>
-              <input
-                onChange={(e) => setProtein(e.target.value)}
-                value={protein}
-                type="number"
-                className=" pl-1 w-48 border-sky-500 border-2 rounded-xl  ml-auto"
-                placeholder="(g)"
-                required
-              />
-            </div>
-            <div className="flex gap-2 justify-center items-center ">
-              <label htmlFor="protein ">Carbs</label>
-              <input
-                onChange={(e) => setCarbs(e.target.value)}
-                value={carbs}
-                type="number"
-                className=" pl-1 w-48 border-sky-500 border-2 rounded-xl ml-auto"
-                placeholder="(g)"
-                required
-              />
-            </div>
-            <div className="flex gap-2 justify-center items-center">
-              <label htmlFor="protein ">Fat</label>
-              <input
-                onChange={(e) => setFat(e.target.value)}
-                value={fat}
-                type="number"
-                className=" pl-1 w-48 border-sky-500 border-2 rounded-xl ml-auto"
-                placeholder="(g)"
-                required
-              />
-            </div>
-            <div className="flex gap-2 justify-center items-center">
-              <label htmlFor="protein ">Roughage</label>
-              <input
-                onChange={(e) => setRoughage(e.target.value)}
-                value={roughage}
-                type="number"
-                className=" pl-1 w-48 border-sky-500 border-2 rounded-xl ml-auto"
-                placeholder="(g)"
-                required
-              />
-            </div>
+            <button
+              onClick={handleClick}
+              disabled={loading}
+              className="bg-teal-700 rounded-2xl text-white w-[90%] mt-4 p-[6px] "
+            >
+              Save
+            </button>
           </div>
-          <button
-            onClick={handleClick}
-            disabled={loading}
-            className="bg-teal-700 rounded-2xl text-white w-[90%] mt-4 p-[6px] "
-          >
-            Save
-          </button>
         </div>
-        <Footer></Footer>
+          <Footer></Footer>
       </div>
     );
   }

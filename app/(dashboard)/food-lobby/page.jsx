@@ -380,442 +380,479 @@
     
 
     return (
-      <div className=" relative flex flex-col justify-center items-center mt-4 gap-5  ">
-        <h1 className="text-center text-3xl font-bold mb-2">Food tracker</h1>
+      <div>
+        <div className="min-h-screen relative flex flex-col justify-center items-center  gap-5  ">
+          <h1 className="text-center text-3xl font-bold mb-2">Food tracker</h1>
 
-        <div className="flex flex-col gap-5 border-2 p-1 border-black w-[320px] justify-start items-center max-h-[475px]  min-h-[350px] overflow-auto rounded-2xl mb-5">
-          <div className="flex relative gap-5 mt-2">
-            <div className="absolute right-48">
-              <Link href={"/food-settings"}>
-                <Settings />
-              </Link>
-            </div>
-            {loading === false && (
-              <div className="flex gap-5">
-                <h2
-                  onClick={() => setActive("overview")}
-                  className={`text-lg font-bold ${
-                    active === "overview" ? "underline" : ""
-                  } cursor-pointer`}
-                >
-                  Overview
-                </h2>
-                <h2
-                  onClick={() => setActive("food")}
-                  className={`text-lg font-bold ${
-                    active === "food" ? "underline" : ""
-                  } cursor-pointer`}
-                >
-                  Food
-                </h2>
+          <div className="flex flex-col gap-5 border-2 p-1 border-black w-[320px] justify-start items-center max-h-[475px]  min-h-[350px] overflow-auto rounded-2xl mb-5">
+            <div className="flex relative gap-5 mt-2">
+              <div className="absolute right-48">
+                <Link href={"/food-settings"}>
+                  <Settings />
+                </Link>
               </div>
-            )}
-          </div>
-          <div>
-            <div className="flex gap-10">
-              <ArrowLeft onClick={() => handleDateChange(-1)} />
-              <div className="flex gap-2">
-                <input
-                  type="date"
-                  value={getCurrentDate(date)}
-                  onChange={handleInputChange}
-                />
-              </div>
-
-              <ArrowRight onClick={() => handleDateChange(1)} />
-            </div>
-            {loading && <p className="text-center">Loading...</p>}
-            {active === "overview" && (
-              <div>
-                <div className="grid grid-cols-2 mt-4 gap-5 w-68 relative mx-auto">
-                  <div className="border-2 rounded-2xl  border-black pl-1 ">
-                    <p className="text-sm p-1">Intake</p>
-                    <p className="font-bold text-lg p-1">
-                      {totalKcal +
-                        totalKcal2 +
-                        totalKcal3 +
-                        totalKcal4 +
-                        totalKcal5 +
-                        totalKcal6}
-                      kcal
-                    </p>
-                    <Link
-                      href="/food"
-                      className="absolute left-[100px] bottom-5 text-white bg-teal-700 rounded-full"
-                    >
-                      <Plus />
-                    </Link>
-                  </div>
-                  <div className="border-2 rounded-2xl  border-black pl-1">
-                    <p className="text-sm p-1">Activities</p>
-                    <p className="font-bold text-lg p-1">
-                      {activities.reduce(
-                        (acc, activity) => acc + activity.kcal,
-                        0
-                      )}
-                      kcal
-                    </p>
-                    <Link
-                      href="/activities"
-                      className="absolute left-[252px] bottom-5 text-white bg-teal-700 rounded-full"
-                    >
-                      <Plus />
-                    </Link>
-                  </div>
+              {loading === false && (
+                <div className="flex gap-5">
+                  <h2
+                    onClick={() => setActive("overview")}
+                    className={`text-lg font-bold ${
+                      active === "overview" ? "underline" : ""
+                    } cursor-pointer`}
+                  >
+                    Overview
+                  </h2>
+                  <h2
+                    onClick={() => setActive("food")}
+                    className={`text-lg font-bold ${
+                      active === "food" ? "underline" : ""
+                    } cursor-pointer`}
+                  >
+                    Food
+                  </h2>
                 </div>
-                <div className="flex gap-2 mt-8 ">
-                  {sum.map((item) => (
-                    <div
-                      className="flex justify-center items-center gap-2"
-                      key={item.title}
-                    >
-                      <div className="rounded-full  bg-teal-700 w-[55px] h-[55px] flex justify-center items-center">
+              )}
+            </div>
+            <div>
+              <div className="flex gap-10">
+                <ArrowLeft onClick={() => handleDateChange(-1)} />
+                <div className="flex gap-2">
+                  <input
+                    type="date"
+                    value={getCurrentDate(date)}
+                    onChange={handleInputChange}
+                  />
+                </div>
+
+                <ArrowRight onClick={() => handleDateChange(1)} />
+              </div>
+              {loading && <p className="text-center">Loading...</p>}
+              {active === "overview" && (
+                <div>
+                  <div className="grid grid-cols-2 mt-4 gap-5 w-68 relative mx-auto">
+                    <div className="border-2 rounded-2xl  border-black pl-1 ">
+                      <p className="text-sm p-1">Intake</p>
+                      <p className="font-bold text-lg p-1">
+                        {totalKcal +
+                          totalKcal2 +
+                          totalKcal3 +
+                          totalKcal4 +
+                          totalKcal5 +
+                          totalKcal6}
+                        kcal
+                      </p>
+                      <Link
+                        href="/food"
+                        className="absolute left-[100px] bottom-5 text-white bg-teal-700 rounded-full"
+                      >
+                        <Plus />
+                      </Link>
+                    </div>
+                    <div className="border-2 rounded-2xl  border-black pl-1">
+                      <p className="text-sm p-1">Activities</p>
+                      <p className="font-bold text-lg p-1">
+                        {activities.reduce(
+                          (acc, activity) => acc + activity.kcal,
+                          0
+                        )}
+                        kcal
+                      </p>
+                      <Link
+                        href="/activities"
+                        className="absolute left-[252px] bottom-5 text-white bg-teal-700 rounded-full"
+                      >
+                        <Plus />
+                      </Link>
+                    </div>
+                  </div>
+                  <div className="flex gap-2 mt-8 ">
+                    {sum.map((item) => (
+                      <div
+                        className="flex justify-center items-center gap-2"
+                        key={item.title}
+                      >
+                        <div className="rounded-full  bg-teal-700 w-[55px] h-[55px] flex justify-center items-center">
+                          <div className="rounded-full  bg-white w-10 h-10 text-gray-900 p-1 justify-center flex items-center">
+                            {item.percent()}%
+                          </div>
+                        </div>
+                        <div>
+                          <p>Sum</p>
+                          <p className="font-bold text-lg">
+                            {totalKcal +
+                              totalKcal2 +
+                              totalKcal3 +
+                              totalKcal4 +
+                              totalKcal5 +
+                              totalKcal6 +
+                              activities.reduce(
+                                (acc, activity) => acc + activity.kcal,
+                                0
+                              )}
+                            kcal&nbsp;
+                            <span className="font-normal text-sm">
+                              from {item.fromKcal} kcal
+                            </span>
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="grid grid-cols-2 gap-1">
+                    <div className="flex gap-2 mt-6 mb-2">
+                      <div className="rounded-full  bg-teal-700 w-[55px] h-[55px] flex justify-center items-center mt-2">
                         <div className="rounded-full  bg-white w-10 h-10 text-gray-900 p-1 justify-center flex items-center">
-                          {item.percent()}%
+                          {totalG.length > 0 &&
+                            `${(
+                              ((totalP +
+                                totalP2 +
+                                totalP3 +
+                                totalP4 +
+                                totalP5 +
+                                totalP6) /
+                                totalG[0].fromG) *
+                              100
+                            ).toFixed(0)}%`}
                         </div>
                       </div>
                       <div>
-                        <p>Sum</p>
-                        <p className="font-bold text-lg">
-                          {totalKcal +
-                            totalKcal2 +
-                            totalKcal3 +
-                            totalKcal4 +
-                            totalKcal5 +
-                            totalKcal6 +
-                            activities.reduce(
-                              (acc, activity) => acc + activity.kcal,
-                              0
-                            )}
-                          kcal&nbsp;
-                          <span className="font-normal text-sm">
-                            from {item.fromKcal} kcal
-                          </span>
+                        <p>Protein</p>
+                        <p className="font-bold flex flex-col ">
+                          {totalP +
+                            totalP2 +
+                            totalP3 +
+                            totalP4 +
+                            totalP5 +
+                            totalP6}{" "}
+                          g
                         </p>
+                        {totalG.map((item, index) => (
+                          <span
+                            key={item.title}
+                            className="font-normal text-sm"
+                          >
+                            {index === 0 && `from ${item.fromG} g`}
+                          </span>
+                        ))}
                       </div>
                     </div>
-                  ))}
-                </div>
-                <div className="grid grid-cols-2 gap-1">
-                  <div className="flex gap-2 mt-6 mb-2">
-                    <div className="rounded-full  bg-teal-700 w-[55px] h-[55px] flex justify-center items-center mt-2">
-                      <div className="rounded-full  bg-white w-10 h-10 text-gray-900 p-1 justify-center flex items-center">
-                        {totalG.length > 0 &&
-                          `${(
-                            ((totalP +
-                              totalP2 +
-                              totalP3 +
-                              totalP4 +
-                              totalP5 +
-                              totalP6) /
-                              totalG[0].fromG) *
-                            100
-                          ).toFixed(0)}%`}
+
+                    <div className="flex gap-2 mt-6 mb-2">
+                      <div className="rounded-full  bg-teal-700 w-[55px] h-[55px] flex justify-center items-center mt-2">
+                        <div className="rounded-full  bg-white w-10 h-10 text-gray-900 p-1 justify-center flex items-center">
+                          {totalG.length > 0 &&
+                            `${(
+                              ((totalC +
+                                totalC2 +
+                                totalC3 +
+                                totalC4 +
+                                totalC5 +
+                                totalC6) /
+                                totalG[1].fromG) *
+                              100
+                            ).toFixed(0)}%`}
+                        </div>
+                      </div>
+                      <div>
+                        <p>Carbs</p>
+                        <p className="font-bold flex flex-col ">
+                          {totalC +
+                            totalC2 +
+                            totalC3 +
+                            totalC4 +
+                            totalC5 +
+                            totalC6}{" "}
+                          g
+                        </p>
+                        {totalG.map((item, index) => (
+                          <span
+                            key={item.title}
+                            className="font-normal text-sm"
+                          >
+                            {index === 1 && `from ${item.fromG} g`}
+                          </span>
+                        ))}
                       </div>
                     </div>
-                    <div>
-                      <p>Protein</p>
-                      <p className="font-bold flex flex-col ">
-                        {totalP + totalP2 + totalP3 + totalP4 + totalP5 + totalP6}{" "}
-                        g
-                      </p>
-                      {totalG.map((item, index) => (
-                        <span key={item.title} className="font-normal text-sm">
-                          {index === 0 && `from ${item.fromG} g`}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
 
-                  <div className="flex gap-2 mt-6 mb-2">
-                    <div className="rounded-full  bg-teal-700 w-[55px] h-[55px] flex justify-center items-center mt-2">
-                      <div className="rounded-full  bg-white w-10 h-10 text-gray-900 p-1 justify-center flex items-center">
-                        {totalG.length > 0 &&
-                          `${(
-                            ((totalC +
-                              totalC2 +
-                              totalC3 +
-                              totalC4 +
-                              totalC5 +
-                              totalC6) /
-                              totalG[1].fromG) *
-                            100
-                          ).toFixed(0)}%`}
+                    <div className="flex gap-2 mt-6 mb-2">
+                      <div className="rounded-full  bg-teal-700 w-[55px] h-[55px] flex justify-center items-center mt-2">
+                        <div className="rounded-full  bg-white w-10 h-10 text-gray-900 p-1 justify-center flex items-center">
+                          {totalG.length > 0 &&
+                            `${(
+                              ((totalF +
+                                totalF2 +
+                                totalF3 +
+                                totalF4 +
+                                totalF5 +
+                                totalF6) /
+                                totalG[2].fromG) *
+                              100
+                            ).toFixed(0)}%`}
+                        </div>
+                      </div>
+                      <div>
+                        <p>Fat</p>
+                        <p className="font-bold flex flex-col ">
+                          {totalF +
+                            totalF2 +
+                            totalF3 +
+                            totalF4 +
+                            totalF5 +
+                            totalF6}{" "}
+                          g
+                        </p>
+                        {totalG.map((item, index) => (
+                          <span
+                            key={item.title}
+                            className="font-normal text-sm"
+                          >
+                            {index === 2 && `from ${item.fromG} g`}
+                          </span>
+                        ))}
                       </div>
                     </div>
-                    <div>
-                      <p>Carbs</p>
-                      <p className="font-bold flex flex-col ">
-                        {totalC + totalC2 + totalC3 + totalC4 + totalC5 + totalC6}{" "}
-                        g
-                      </p>
-                      {totalG.map((item, index) => (
-                        <span key={item.title} className="font-normal text-sm">
-                          {index === 1 && `from ${item.fromG} g`}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
 
-                  <div className="flex gap-2 mt-6 mb-2">
-                    <div className="rounded-full  bg-teal-700 w-[55px] h-[55px] flex justify-center items-center mt-2">
-                      <div className="rounded-full  bg-white w-10 h-10 text-gray-900 p-1 justify-center flex items-center">
-                        {totalG.length > 0 &&
-                          `${(
-                            ((totalF +
-                              totalF2 +
-                              totalF3 +
-                              totalF4 +
-                              totalF5 +
-                              totalF6) /
-                              totalG[2].fromG) *
-                            100
-                          ).toFixed(0)}%`}
+                    <div className="flex gap-2 mt-6 mb-2">
+                      <div className="rounded-full  bg-teal-700 w-[55px] h-[55px] flex justify-center items-center mt-2">
+                        <div className="rounded-full  bg-white w-10 h-10 text-gray-900 p-1 justify-center flex items-center">
+                          {totalG.length > 0 &&
+                            `${(
+                              ((totalR +
+                                totalR2 +
+                                totalR3 +
+                                totalR4 +
+                                totalR5 +
+                                totalR6) /
+                                totalG[3].fromG) *
+                              100
+                            ).toFixed(0)}%`}
+                        </div>
+                      </div>
+                      <div>
+                        <p>Roughage</p>
+                        <p className="font-bold flex flex-col ">
+                          {totalR +
+                            totalR2 +
+                            totalR3 +
+                            totalR4 +
+                            totalR5 +
+                            totalR6}{" "}
+                          g
+                        </p>
+                        {totalG.map((item, index) => (
+                          <span
+                            key={item.title}
+                            className="font-normal text-sm"
+                          >
+                            {index === 3 && `from ${item.fromG} g`}
+                          </span>
+                        ))}
                       </div>
                     </div>
-                    <div>
-                      <p>Fat</p>
-                      <p className="font-bold flex flex-col ">
-                        {totalF + totalF2 + totalF3 + totalF4 + totalF5 + totalF6}{" "}
-                        g
-                      </p>
-                      {totalG.map((item, index) => (
-                        <span key={item.title} className="font-normal text-sm">
-                          {index === 2 && `from ${item.fromG} g`}
-                        </span>
-                      ))}
+                  </div>
+                </div>
+              )}
+
+              {active === "food" && (
+                <div className="mt-4 flex flex-col gap-2">
+                  <div className=" bg-gray-200 rounded-xl p-1 text-black flex justify-between items-center">
+                    <label htmlFor="ranajky">Breakfast </label>
+                    <div className="flex gap-2  ">
+                      <p>{totalKcal} kcal</p>
+                      <Link
+                        href="/food"
+                        className=" text-white bg-teal-700 rounded-full"
+                      >
+                        <Plus />
+                      </Link>
                     </div>
                   </div>
-
-                  <div className="flex gap-2 mt-6 mb-2">
-                    <div className="rounded-full  bg-teal-700 w-[55px] h-[55px] flex justify-center items-center mt-2">
-                      <div className="rounded-full  bg-white w-10 h-10 text-gray-900 p-1 justify-center flex items-center">
-                        {totalG.length > 0 &&
-                          `${(
-                            ((totalR +
-                              totalR2 +
-                              totalR3 +
-                              totalR4 +
-                              totalR5 +
-                              totalR6) /
-                              totalG[3].fromG) *
-                            100
-                          ).toFixed(0)}%`}
-                      </div>
-                    </div>
-                    <div>
-                      <p>Roughage</p>
-                      <p className="font-bold flex flex-col ">
-                        {totalR + totalR2 + totalR3 + totalR4 + totalR5 + totalR6}{" "}
-                        g
-                      </p>
-                      {totalG.map((item, index) => (
-                        <span key={item.title} className="font-normal text-sm">
-                          {index === 3 && `from ${item.fromG} g`}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {active === "food" && (
-              <div className="mt-4 flex flex-col gap-2">
-                <div className=" bg-gray-200 rounded-xl p-1 text-black flex justify-between items-center">
-                  <label htmlFor="ranajky">Breakfast </label>
-                  <div className="flex gap-2  ">
-                    <p>{totalKcal} kcal</p>
-                    <Link
-                      href="/food"
-                      className=" text-white bg-teal-700 rounded-full"
-                    >
-                      <Plus />
-                    </Link>
-                  </div>
-                </div>
-                {breakfast.map((item) => (
-                  <p className="flex justify-between" key={item._id}>
-                    {item.title} &nbsp;
-                    <span className="text-gray-500">
-                      {item.quantity} * {item.option}g/ml &nbsp; {item.kcal} kcal
-                      &nbsp;
-                    </span>
-                    <Trash2
-                      onClick={() => handleDelete(item._id)}
-                      style={{ cursor: "pointer" }}
-                      color="#ff0000"
-                    />
-                  </p>
-                ))}
-                <div className=" bg-gray-200 rounded-xl p-1 text-black flex justify-between items-center">
-                  <label htmlFor="ranajky">Snack </label>
-                  <div className="flex gap-2  ">
-                    <p>{totalKcal2} kcal</p>
-                    <Link
-                      href="/food"
-                      className=" text-white bg-teal-700 rounded-full"
-                    >
-                      <Plus />
-                    </Link>
-                  </div>
-                </div>
-                {snack.map((item) => (
-                  <p className="flex justify-between" key={item._id}>
-                    {item.title} &nbsp;
-                    <span className="text-gray-500">
-                      {item.quantity} * {item.option}g/ml &nbsp; {item.kcal} kcal
-                      &nbsp;
-                    </span>
-                    <Trash2
-                      onClick={() => handleDelete(item._id)}
-                      style={{ cursor: "pointer" }}
-                      color="#ff0000"
-                    />
-                  </p>
-                ))}
-                <div className=" bg-gray-200 rounded-xl p-1 text-black flex justify-between items-center">
-                  <label htmlFor="ranajky">Lunch </label>
-                  <div className="flex gap-2  ">
-                    <p>{totalKcal3} kcal</p>
-
-                    <Link
-                      href="/food"
-                      className=" text-white bg-teal-700 rounded-full"
-                    >
-                      <Plus />
-                    </Link>
-                  </div>
-                </div>
-                {lunch.map((item) => (
-                  <p key={item._id} className="flex justify-between">
-                    {item.title} &nbsp;
-                    <span className="text-gray-500 ">
-                      {item.quantity} * {item.option}g/ml &nbsp; {item.kcal} kcal
-                      &nbsp;
-                    </span>
-                    <Trash2
-                      onClick={() => handleDelete(item._id)}
-                      style={{ cursor: "pointer" }}
-                      color="#ff0000"
-                    />
-                  </p>
-                ))}
-                <div className=" bg-gray-200 rounded-xl p-1 text-black flex justify-between items-center">
-                  <label htmlFor="ranajky">Olovrant </label>
-                  <div className="flex gap-2  ">
-                    <p>{totalKcal4} kcal</p>
-                    <Link
-                      href="/food"
-                      className=" text-white bg-teal-700 rounded-full"
-                    >
-                      <Plus />
-                    </Link>
-                  </div>
-                </div>
-                {olovrant.map((item) => (
-                  <p className="flex justify-between" key={item._id}>
-                    {item.title} &nbsp;
-                    <span className="text-gray-500">
-                      {item.quantity} * {item.option}g/ml &nbsp; {item.kcal} kcal
-                      &nbsp;
-                    </span>
-                    <Trash2
-                      onClick={() => handleDelete(item._id)}
-                      style={{ cursor: "pointer" }}
-                      color="#ff0000"
-                    />
-                  </p>
-                ))}
-                <div className=" bg-gray-200 rounded-xl p-1 text-black flex justify-between items-center">
-                  <label htmlFor="ranajky">Dinner </label>
-                  <div className="flex gap-2  ">
-                    <p>{totalKcal5} kcal</p>
-                    <Link
-                      href="/food"
-                      className=" text-white bg-teal-700 rounded-full"
-                    >
-                      <Plus />
-                    </Link>
-                  </div>
-                </div>
-                {dinner.map((item) => (
-                  <p className="flex justify-between" key={item._id}>
-                    {item.title} &nbsp;
-                    <span className="text-gray-500">
-                      {item.quantity} * {item.option}g/ml &nbsp; {item.kcal} kcal
-                      &nbsp;
-                    </span>
-                    <Trash2
-                      onClick={() => handleDelete(item._id)}
-                      style={{ cursor: "pointer" }}
-                      color="#ff0000"
-                    />
-                  </p>
-                ))}
-                <div className=" bg-gray-200 rounded-xl p-1 text-black flex justify-between items-center">
-                  <label htmlFor="ranajky">Second dinner </label>
-                  <div className="flex gap-2  ">
-                    <p>{totalKcal6} kcal</p>
-                    <Link
-                      href="/food"
-                      className=" text-white bg-teal-700 rounded-full"
-                    >
-                      <Plus />
-                    </Link>
-                  </div>
-                </div>
-                {secondDinner.map((item) => (
-                  <p className="flex" key={item._id}>
-                    {item.title} &nbsp;
-                    <span className="text-gray-500">
-                      {item.quantity} * {item.option}g/ml &nbsp; {item.kcal} kcal
-                      &nbsp;
-                    </span>
-                    <Trash2
-                      onClick={() => handleDelete(item._id)}
-                      style={{ cursor: "pointer" }}
-                      color="#ff0000"
-                    />
-                  </p>
-                ))}
-
-                <div className=" bg-gray-200 rounded-xl p-1 text-black flex justify-between items-center">
-                  <label htmlFor="ranajky">Activities </label>
-                  <div className="flex gap-2  ">
-                    <p>
-                      {activities
-                        .filter((entry) => entry.userId === userId)
-                        .reduce((acc, activity) => acc + activity.kcal, 0) ||
-                        0}{" "}
-                      kcal
-                    </p>
-                    <Link
-                      href="/activities"
-                      className=" text-white bg-teal-700 rounded-full"
-                    >
-                      <Plus />
-                    </Link>
-                  </div>
-                </div>
-                {activities
-                  .filter((entry) => entry.userId === userId)
-                  .map((activity) => (
-                    <div key={activity.id} className="flex gap-3 justify-between">
-                      <p>{activity.title}</p>
-                      <p className="text-gray-500">{activity.kcal} kcal</p>
+                  {breakfast.map((item) => (
+                    <p className="flex justify-between" key={item._id}>
+                      {item.title} &nbsp;
+                      <span className="text-gray-500">
+                        {item.quantity} * {item.option}g/ml &nbsp; {item.kcal}{" "}
+                        kcal &nbsp;
+                      </span>
                       <Trash2
-                        onClick={() => handleDelete(activity._id)}
+                        onClick={() => handleDelete(item._id)}
                         style={{ cursor: "pointer" }}
                         color="#ff0000"
                       />
-                    </div>
+                    </p>
                   ))}
-              </div>
-            )}
+                  <div className=" bg-gray-200 rounded-xl p-1 text-black flex justify-between items-center">
+                    <label htmlFor="ranajky">Snack </label>
+                    <div className="flex gap-2  ">
+                      <p>{totalKcal2} kcal</p>
+                      <Link
+                        href="/food"
+                        className=" text-white bg-teal-700 rounded-full"
+                      >
+                        <Plus />
+                      </Link>
+                    </div>
+                  </div>
+                  {snack.map((item) => (
+                    <p className="flex justify-between" key={item._id}>
+                      {item.title} &nbsp;
+                      <span className="text-gray-500">
+                        {item.quantity} * {item.option}g/ml &nbsp; {item.kcal}{" "}
+                        kcal &nbsp;
+                      </span>
+                      <Trash2
+                        onClick={() => handleDelete(item._id)}
+                        style={{ cursor: "pointer" }}
+                        color="#ff0000"
+                      />
+                    </p>
+                  ))}
+                  <div className=" bg-gray-200 rounded-xl p-1 text-black flex justify-between items-center">
+                    <label htmlFor="ranajky">Lunch </label>
+                    <div className="flex gap-2  ">
+                      <p>{totalKcal3} kcal</p>
+
+                      <Link
+                        href="/food"
+                        className=" text-white bg-teal-700 rounded-full"
+                      >
+                        <Plus />
+                      </Link>
+                    </div>
+                  </div>
+                  {lunch.map((item) => (
+                    <p key={item._id} className="flex justify-between">
+                      {item.title} &nbsp;
+                      <span className="text-gray-500 ">
+                        {item.quantity} * {item.option}g/ml &nbsp; {item.kcal}{" "}
+                        kcal &nbsp;
+                      </span>
+                      <Trash2
+                        onClick={() => handleDelete(item._id)}
+                        style={{ cursor: "pointer" }}
+                        color="#ff0000"
+                      />
+                    </p>
+                  ))}
+                  <div className=" bg-gray-200 rounded-xl p-1 text-black flex justify-between items-center">
+                    <label htmlFor="ranajky">Olovrant </label>
+                    <div className="flex gap-2  ">
+                      <p>{totalKcal4} kcal</p>
+                      <Link
+                        href="/food"
+                        className=" text-white bg-teal-700 rounded-full"
+                      >
+                        <Plus />
+                      </Link>
+                    </div>
+                  </div>
+                  {olovrant.map((item) => (
+                    <p className="flex justify-between" key={item._id}>
+                      {item.title} &nbsp;
+                      <span className="text-gray-500">
+                        {item.quantity} * {item.option}g/ml &nbsp; {item.kcal}{" "}
+                        kcal &nbsp;
+                      </span>
+                      <Trash2
+                        onClick={() => handleDelete(item._id)}
+                        style={{ cursor: "pointer" }}
+                        color="#ff0000"
+                      />
+                    </p>
+                  ))}
+                  <div className=" bg-gray-200 rounded-xl p-1 text-black flex justify-between items-center">
+                    <label htmlFor="ranajky">Dinner </label>
+                    <div className="flex gap-2  ">
+                      <p>{totalKcal5} kcal</p>
+                      <Link
+                        href="/food"
+                        className=" text-white bg-teal-700 rounded-full"
+                      >
+                        <Plus />
+                      </Link>
+                    </div>
+                  </div>
+                  {dinner.map((item) => (
+                    <p className="flex justify-between" key={item._id}>
+                      {item.title} &nbsp;
+                      <span className="text-gray-500">
+                        {item.quantity} * {item.option}g/ml &nbsp; {item.kcal}{" "}
+                        kcal &nbsp;
+                      </span>
+                      <Trash2
+                        onClick={() => handleDelete(item._id)}
+                        style={{ cursor: "pointer" }}
+                        color="#ff0000"
+                      />
+                    </p>
+                  ))}
+                  <div className=" bg-gray-200 rounded-xl p-1 text-black flex justify-between items-center">
+                    <label htmlFor="ranajky">Second dinner </label>
+                    <div className="flex gap-2  ">
+                      <p>{totalKcal6} kcal</p>
+                      <Link
+                        href="/food"
+                        className=" text-white bg-teal-700 rounded-full"
+                      >
+                        <Plus />
+                      </Link>
+                    </div>
+                  </div>
+                  {secondDinner.map((item) => (
+                    <p className="flex" key={item._id}>
+                      {item.title} &nbsp;
+                      <span className="text-gray-500">
+                        {item.quantity} * {item.option}g/ml &nbsp; {item.kcal}{" "}
+                        kcal &nbsp;
+                      </span>
+                      <Trash2
+                        onClick={() => handleDelete(item._id)}
+                        style={{ cursor: "pointer" }}
+                        color="#ff0000"
+                      />
+                    </p>
+                  ))}
+
+                  <div className=" bg-gray-200 rounded-xl p-1 text-black flex justify-between items-center">
+                    <label htmlFor="ranajky">Activities </label>
+                    <div className="flex gap-2  ">
+                      <p>
+                        {activities
+                          .filter((entry) => entry.userId === userId)
+                          .reduce((acc, activity) => acc + activity.kcal, 0) ||
+                          0}{" "}
+                        kcal
+                      </p>
+                      <Link
+                        href="/activities"
+                        className=" text-white bg-teal-700 rounded-full"
+                      >
+                        <Plus />
+                      </Link>
+                    </div>
+                  </div>
+                  {activities
+                    .filter((entry) => entry.userId === userId)
+                    .map((activity) => (
+                      <div
+                        key={activity.id}
+                        className="flex gap-3 justify-between"
+                      >
+                        <p>{activity.title}</p>
+                        <p className="text-gray-500">{activity.kcal} kcal</p>
+                        <Trash2
+                          onClick={() => handleDelete(activity._id)}
+                          style={{ cursor: "pointer" }}
+                          color="#ff0000"
+                        />
+                      </div>
+                    ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
-        <Footer></Footer>
+          <Footer></Footer>
       </div>
     );
   };

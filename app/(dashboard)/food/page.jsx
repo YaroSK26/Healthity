@@ -538,124 +538,126 @@ const Food = () => {
   const [selectedDate, setSelectedDate] = useState(getCurrentDate());
 
   return (
-    <div className="  flex flex-col justify-center items-center mt-5 gap-5 ">
-      <Link href={"food-lobby"} className="absolute left-3 top-24">
-        <ArrowLeft />
-      </Link>
-      <h1 className="text-center text-3xl font-bold mb-4">Food menu</h1>
-      <form>
-        <label>Filter: </label>
-        <input
-          type="text"
-          className="bg-gray-200 rounded-xl p-1"
-          value={filterLetter}
-          onChange={(e) => setFilterLetter(e.target.value)}
-        />
-      </form>
-      <div className="flex gap-3 justify-center  items-center flex-wrap mb-3">
+    <div>
+      <div className="min-h-screen flex flex-col justify-center items-center gap-5 pt-20 ">
+        <Link href={"food-lobby"} className="absolute left-3 top-24">
+          <ArrowLeft />
+        </Link>
+        <h1 className="text-center text-3xl font-bold mb-4">Food menu</h1>
+        <form>
+          <label>Filter: </label>
+          <input
+            type="text"
+            className="bg-gray-200 rounded-xl p-1"
+            value={filterLetter}
+            onChange={(e) => setFilterLetter(e.target.value)}
+          />
+        </form>
+        <div className="flex gap-3 justify-center  items-center flex-wrap mb-3">
           {filteredFood.length > 0 ? (
-        filteredFood.map((item) => (
-          <form key={item.title} onSubmit={(e) => handleAddFood(e, item)}>
-            <div className="w-60 h-[350px] border border-sky-500 rounded-xl flex flex-col items-center gap-3">
-              <img
-                className="rounded-xl p-1 w-60 h-36 "
-                src={item.src}
-                alt=""
-              />
-              <p className="text-lg font-bold text-center">{item.title}</p>
-              <div className="flex">
-                <label>Eating time: </label>&nbsp;
-                <select
-                  className="w-28 bg-gray-200 rounded-xl text-center"
-                  value={foodSelections[item.id]?.time || ""}
-                  onChange={(e) => {
-                    setFoodSelections((prevSelections) => ({
-                      ...prevSelections,
-                      [item.id]: {
-                        ...prevSelections[item.id],
-                        time: e.target.value,
-                      },
-                    }));
-                  }}
-                  required
-                >
-                  <option value="" disabled>
-                    Select
-                  </option>
-                  <option value="Breakfast">Breakfast</option>
-                  <option value="Snack">Snack</option>
-                  <option value="Lunch">Lunch</option>
-                  <option value="Olovrant">Olovrant</option>
-                  <option value="Dinner">Dinner</option>
-                  <option value="Second dinner">Second dinner</option>
-                </select>
-              </div>
-
-              <div className="flex  gap-2">
-                <ArrowLeft onClick={() => handleDateChange(-1, item)} />
-                <div className="flex gap-2 ">
-                  <input
-                    className="bg-gray-200 rounded-xl text-center"
-                    type="date"
-                    value={foodDates[item.title] || selectedDate}
-                    onChange={(e) => handleInputChange(e, item)}
+            filteredFood.map((item) => (
+              <form key={item.title} onSubmit={(e) => handleAddFood(e, item)}>
+                <div className="w-60 h-[350px] border border-sky-500 rounded-xl flex flex-col items-center gap-3">
+                  <img
+                    className="rounded-xl p-1 w-60 h-36 "
+                    src={item.src}
+                    alt=""
                   />
-                </div>
+                  <p className="text-lg font-bold text-center">{item.title}</p>
+                  <div className="flex">
+                    <label>Eating time: </label>&nbsp;
+                    <select
+                      className="w-28 bg-gray-200 rounded-xl text-center"
+                      value={foodSelections[item.id]?.time || ""}
+                      onChange={(e) => {
+                        setFoodSelections((prevSelections) => ({
+                          ...prevSelections,
+                          [item.id]: {
+                            ...prevSelections[item.id],
+                            time: e.target.value,
+                          },
+                        }));
+                      }}
+                      required
+                    >
+                      <option value="" disabled>
+                        Select
+                      </option>
+                      <option value="Breakfast">Breakfast</option>
+                      <option value="Snack">Snack</option>
+                      <option value="Lunch">Lunch</option>
+                      <option value="Olovrant">Olovrant</option>
+                      <option value="Dinner">Dinner</option>
+                      <option value="Second dinner">Second dinner</option>
+                    </select>
+                  </div>
 
-                <ArrowRight onClick={() => handleDateChange(1, item)} />
-              </div>
+                  <div className="flex  gap-2">
+                    <ArrowLeft onClick={() => handleDateChange(-1, item)} />
+                    <div className="flex gap-2 ">
+                      <input
+                        className="bg-gray-200 rounded-xl text-center"
+                        type="date"
+                        value={foodDates[item.title] || selectedDate}
+                        onChange={(e) => handleInputChange(e, item)}
+                      />
+                    </div>
 
-              <div className="flex">
-                <div>
-                  <label htmlFor="quantity">Quantity: </label>
-                  <input
-                    className="bg-gray-200 rounded-xl w-12 text-center"
-                    type="number"
-                    min={1}
-                    max={5}
-                    step={0.5}
-                    value={foodSelections[item.id]?.quantity || 1}
-                    onChange={(e) => {
-                      setFoodSelections((prevSelections) => ({
-                        ...prevSelections,
-                        [item.id]: {
-                          ...prevSelections[item.id],
-                          quantity: e.target.value,
-                        },
-                      }));
-                    }}
-                  />{" "}
-                  ×
-                  <select
-                    className="bg-gray-200 rounded-xl"
-                    value={foodSelections[item.id]?.option || ""}
-                    onChange={(e) => {
-                      setFoodSelections((prevSelections) => ({
-                        ...prevSelections,
-                        [item.id]: {
-                          ...prevSelections[item.id],
-                          option: e.target.value,
-                        },
-                      }));
-                    }}
-                  >
-                    <option>{item.opt1}</option>
-                    <option>{item.opt2}</option>
-                    <option>{item.opt3}</option>
-                  </select>
+                    <ArrowRight onClick={() => handleDateChange(1, item)} />
+                  </div>
+
+                  <div className="flex">
+                    <div>
+                      <label htmlFor="quantity">Quantity: </label>
+                      <input
+                        className="bg-gray-200 rounded-xl w-12 text-center"
+                        type="number"
+                        min={1}
+                        max={5}
+                        step={0.5}
+                        value={foodSelections[item.id]?.quantity || 1}
+                        onChange={(e) => {
+                          setFoodSelections((prevSelections) => ({
+                            ...prevSelections,
+                            [item.id]: {
+                              ...prevSelections[item.id],
+                              quantity: e.target.value,
+                            },
+                          }));
+                        }}
+                      />{" "}
+                      ×
+                      <select
+                        className="bg-gray-200 rounded-xl"
+                        value={foodSelections[item.id]?.option || ""}
+                        onChange={(e) => {
+                          setFoodSelections((prevSelections) => ({
+                            ...prevSelections,
+                            [item.id]: {
+                              ...prevSelections[item.id],
+                              option: e.target.value,
+                            },
+                          }));
+                        }}
+                      >
+                        <option>{item.opt1}</option>
+                        <option>{item.opt2}</option>
+                        <option>{item.opt3}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <button className="bg-teal-700 p-1 rounded-lg text-white w-[90%] ">
+                    Add
+                  </button>
                 </div>
-              </div>
-              <button className="bg-teal-700 p-1 rounded-lg text-white w-[90%] ">
-                Add
-              </button>
-            </div>
-          </form>
-        ))): (
-            <div className="text-lg font-bold text-center">
-            No food found
-          </div>
-        )}
+              </form>
+            ))
+          ) : (
+            <div className="text-lg font-bold text-center">No food found</div>
+          )}
+        </div>
       </div>
+        <Footer></Footer>
     </div>
   );
 };
