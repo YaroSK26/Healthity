@@ -1,85 +1,74 @@
 "use client";
 
-import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import { UserButton } from "@clerk/nextjs";
-import { Menu } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import {useState} from "react"
 
 const SheetMenu = () => {
-  const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const openSheet = () => {
-    setIsSheetOpen(true);
-  };
-
-  const closeSheet = () => {
-    setIsSheetOpen(false);
-  };
-
-  const [menuButtonActive, setMenuButtonActive] = useState(false);
 
   return (
-    <div>
-      <Sheet open={isSheetOpen}>
-        <SheetTrigger>
-          <Menu
-            onClick={() => {
-              openSheet();
-              setMenuButtonActive(true);
-            }}
-            className={`text-white md:hidden ${
-              menuButtonActive ? "active" : ""
-            }`}
-          />
-        </SheetTrigger>
-        <SheetContent className="bg-teal-600 text-white w-full " side="right">
-          <div className="flex justify-end ">
-            <div
-              onClick={closeSheet}
-              className="w-7 h-7  z-10  bg-gray-200 font-bold  text-gray-900 flex justify-center items-center rounded-3xl"
-            >
-              X
-            </div>
-          </div>
-          <nav className="flex gap-3 justify-end w-full mr-2">
-            <ul className="flex flex-col gap-5 justify-end w-full">
+    <>
+      <button
+        onClick={() => setIsMenuOpen(true)}
+        className="text-white md:hidden p-4"
+      >
+        <Menu />
+      </button>
+      {isMenuOpen && (
+        <div className="fixed inset-0 w-full h-full bg-teal-500 z-50 flex flex-col">
+          <button
+            onClick={() => setIsMenuOpen(false)}
+            className="self-end p-6  text-white"
+          >
+            <X />
+          </button>
+          <nav className="flex flex-col items-center mt-5 gap-5">
+            <ul className="flex flex-col gap-5 ml-5 justify-end w-full">
               <li>
-                <Link href={"/weight"} onClick={closeSheet}>
+                <Link href={"/weight"} onClick={() => setIsMenuOpen(false)}>
                   Weight
                 </Link>
               </li>
               <li>
-                <Link href={"/bmi"} onClick={closeSheet}>
+                <Link href={"/bmi"} onClick={() => setIsMenuOpen(false)}>
                   BMI
                 </Link>
               </li>
               <li>
-                <Link href={"/water"} onClick={closeSheet}>
+                <Link href={"/water"} onClick={() => setIsMenuOpen(false)}>
                   Water
                 </Link>
               </li>
               <li>
-                <Link href={"/journal"} onClick={closeSheet}>
+                <Link href={"/journal"} onClick={() => setIsMenuOpen(false)}>
                   Journal
                 </Link>
               </li>
               <li>
-                <Link href={"/bloodPressure"} onClick={closeSheet}>
-                 Pressure
+                <Link
+                  href={"/bloodPressure"}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Pressure
                 </Link>
               </li>
               <li>
-                <Link href={"/food-lobby"} onClick={closeSheet}>
+                <Link
+                  href={"/food-lobby"}
+                  onClick={() => setIsMenuOpen(false)}
+                >
                   Tracker
                 </Link>
               </li>
               <UserButton afterSignOutUrl="/"></UserButton>
             </ul>
           </nav>
-        </SheetContent>
-      </Sheet>
-    </div>
+        </div>
+      )}
+    </>
   );
 };
 
